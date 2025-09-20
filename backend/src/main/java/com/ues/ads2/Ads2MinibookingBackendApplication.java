@@ -5,9 +5,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class Ads2MinibookingBackendApplication {
-
 	public static void main(String[] args) {
-	
+	/* 
 		//Cargando vaiables de entorno en .env
 		Dotenv dotenv = Dotenv.configure().ignoreIfMissing().load();
 		System.setProperty("JDBC_DATABASE_URL", dotenv.get("JDBC_DATABASE_URL"));
@@ -15,6 +14,7 @@ public class Ads2MinibookingBackendApplication {
         	System.setProperty("DB_PASS", dotenv.get("DB_PASS"));
         	
 		SpringApplication.run(Ads2MinibookingBackendApplication.class, args);
+		*/
 	}
 
 }
