@@ -3,10 +3,12 @@ package com.ues.ads2;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import io.github.cdimascio.dotenv.Dotenv;
+
 @SpringBootApplication
 public class Ads2MinibookingBackendApplication {
 	public static void main(String[] args) {
-	/* 
+	 
 		//Cargando vaiables de entorno en .env
 		Dotenv dotenv = Dotenv.configure().ignoreIfMissing().load();
 		System.setProperty("JDBC_DATABASE_URL", dotenv.get("JDBC_DATABASE_URL"));
@@ -14,7 +16,7 @@ public class Ads2MinibookingBackendApplication {
         	System.setProperty("DB_PASS", dotenv.get("DB_PASS"));
         	
 		SpringApplication.run(Ads2MinibookingBackendApplication.class, args);
-		*/
+		
 	}
 
 }
