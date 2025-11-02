@@ -1,5 +1,6 @@
 package com.ues.ads2.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -19,4 +20,7 @@ public class User {
     private String name;
     private String email;
     private String password;
+
+    @Column(unique = true)
+    private String username;
 }

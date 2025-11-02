@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 public class ReservationRequestDTO {
-    private Long userId;
+    //private Long userId;
     private Long spaceId;
     private LocalDateTime startTime;
     private LocalDateTime endTime;

@@ -1,0 +1,45 @@
+<h1>Mis Reservas</h1>
+
+<div *ngIf="reservations.length > 0; else noReservations">
+  <table>
+    <thead>
+      <tr>
+        <th>Espacio</th>
+        <th>Inicio</th>
+        <th>Fin</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let reservation of reservations">
+        <td>{{ reservation.space.name }}</td>
+        <td>{{ reservation.startTime | date:'short' }}</td>
+        <td>{{ reservation.endTime | date:'short' }}</td>
+        <td>
+          <button (click)="editReservation(reservation)">Editar</button>
+          <button (click)="cancelReservation(reservation.id)">Cancelar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<ng-template #noReservations>
+  <p>No tienes reservas activas.</p>
+</ng-template>
+
+<div *ngIf="editingReservation">
+  <h2>Editar Reserva</h2>
+  <form (ngSubmit)="saveReservation()">
+    <div>
+      <label for="startTime">Inicio:</label>
+      <input type="datetime-local" id="startTime" [(ngModel)]="editingReservation.startTime" name="startTime">
+    </div>
+    <div>
+      <label for="endTime">Fin:</label>
+      <input type="datetime-local" id="endTime" [(ngModel)]="editingReservation.endTime" name="endTime">
+    </div>
+    <button type="submit">Guardar</button>
+    <button type="button" (click)="cancelEdit()">Cancelar</button>
+  </form>
+</div>
