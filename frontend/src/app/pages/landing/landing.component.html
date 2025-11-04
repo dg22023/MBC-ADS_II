@@ -1,0 +1,12 @@
+<h1>Reservar espacios</h1>
+<div class="grid">
+  <div class="card" *ngFor="let s of spaces">
+    <div class="card-header">{{s.name}} <small>({{s.type}})</small></div>
+    <div class="card-body">
+      <p>{{s.description}}</p>
+      <p>Capacidad: {{s.capacity}}</p>
+      <p>Horarios: <span *ngFor="let t of s.availableTimes">{{t}} </span></p>
+      <button (click)="goToReserve(s)">Reservar</button>
+    </div>
+  </div>
+</div>

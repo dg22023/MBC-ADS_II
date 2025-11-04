@@ -1,0 +1,29 @@
+<div *ngIf="space; else notFound">
+  <h2>Reservar: {{space?.name}} ({{space?.type}})</h2>
+  <p>{{space?.description}}</p>
+
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <mat-form-field appearance="fill">
+      <mat-label>Tipo de espacio</mat-label>
+      <input matInput formControlName="type" placeholder="Aula, Laboratorio, etc.">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Fecha</mat-label>
+      <input matInput type="date" formControlName="date">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Horario</mat-label>
+      <select matNativeControl formControlName="time">
+        <option *ngFor="let t of availableTimes" [value]="t">{{t}}</option>
+      </select>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" type="submit">Confirmar Reserva</button>
+  </form>
+</div>
+
+<ng-template #notFound>
+  <p>Espacio no encontrado.</p>
+</ng-template>

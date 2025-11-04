@@ -1,0 +1,4 @@
+.grid{ display:flex; gap:1rem; flex-wrap:wrap; }
+.card{ border:1px solid #ddd; padding:1rem; border-radius:6px; width:260px; }
+.card-header{ font-weight:600; margin-bottom:0.5rem; }
+button{ cursor:pointer; padding:0.4rem 0.8rem; border-radius:4px; }
