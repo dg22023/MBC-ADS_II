@@ -18,6 +18,8 @@ public class SegurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         // Permitir todas las peticiones a tus endpoints de spaces
                         .requestMatchers("/api/v1/spaces/**").permitAll()
+                        // Permitir todas las peticiones a tus endpoints de reservations
+                        .requestMatchers("/api/v1/reservations/**").permitAll()
                         // Requerir autenticación para cualquier otra petición (opcional por ahora)
                         .anyRequest().authenticated());
 
