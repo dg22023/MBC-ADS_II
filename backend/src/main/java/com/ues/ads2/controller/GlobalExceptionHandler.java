@@ -34,7 +34,7 @@ public class GlobalExceptionHandler {
 
         ErrorResponseDTO error = ErrorResponseDTO.builder()
                 .status(HttpStatus.BAD_REQUEST.value())
-                .error("Validation Error")
+                .error("Error de validación")
                 .message(errorMessage)
                 .timestamp(LocalDateTime.now())
                 .path(request.getRequestURI())
@@ -53,7 +53,7 @@ public class GlobalExceptionHandler {
 
         ErrorResponseDTO error = ErrorResponseDTO.builder()
                 .status(HttpStatus.CONFLICT.value())
-                .error("Reservation Conflict")
+                .error("Conflicto de Reserva")
                 .message(ex.getMessage())
                 .timestamp(LocalDateTime.now())
                 .path(request.getRequestURI())
@@ -72,7 +72,7 @@ public class GlobalExceptionHandler {
 
         ErrorResponseDTO error = ErrorResponseDTO.builder()
                 .status(HttpStatus.BAD_REQUEST.value())
-                .error("Invalid Input")
+                .error("Entrada no válida")
                 .message(ex.getMessage())
                 .timestamp(LocalDateTime.now())
                 .path(request.getRequestURI())
@@ -91,7 +91,7 @@ public class GlobalExceptionHandler {
 
         ErrorResponseDTO error = ErrorResponseDTO.builder()
                 .status(HttpStatus.NOT_FOUND.value())
-                .error("Resource Not Found")
+                .error("Recurso no encontrado")
                 .message(ex.getMessage())
                 .timestamp(LocalDateTime.now())
                 .path(request.getRequestURI())
@@ -110,8 +110,8 @@ public class GlobalExceptionHandler {
 
         ErrorResponseDTO error = ErrorResponseDTO.builder()
                 .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
-                .error("Internal Server Error")
-                .message("An unexpected error occurred: " + ex.getMessage())
+                .error("Error Interno del Servidor")
+                .message("Ocurrió un error inesperado: " + ex.getMessage())
                 .timestamp(LocalDateTime.now())
                 .path(request.getRequestURI())
                 .build();

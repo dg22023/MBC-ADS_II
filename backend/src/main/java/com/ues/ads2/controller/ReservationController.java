@@ -43,19 +43,19 @@ public class ReservationController {
         
         // Validate that user exists
         User user = userRepository.findById(reservationRequest.getUserId())
-                .orElseThrow(() -> new RuntimeException("User not found with id: " + reservationRequest.getUserId()));
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado con el ID: " + reservationRequest.getUserId()));
         
         // Validate that space exists
         Space space = spaceRepository.findById(reservationRequest.getSpaceId())
-                .orElseThrow(() -> new RuntimeException("Space not found with id: " + reservationRequest.getSpaceId()));
+                .orElseThrow(() -> new RuntimeException("Espacio no encontrado con el ID: " + reservationRequest.getSpaceId()));
 
         // Validate time range
         if (reservationRequest.getStartTime().isAfter(reservationRequest.getEndTime())) {
-            throw new IllegalArgumentException("Start time must be before end time");
+            throw new IllegalArgumentException("La hora de inicio debe ser antes de la hora de fin");
         }
 
         if (reservationRequest.getStartTime().isBefore(java.time.LocalDateTime.now())) {
-            throw new IllegalArgumentException("Cannot create reservation in the past");
+            throw new IllegalArgumentException("No se puede crear una reserva en el pasado");
         }
 
         // Build reservation entity
@@ -78,7 +78,7 @@ public class ReservationController {
                 .spaceType(createdReservation.getSpace().getType().toString())
                 .startTime(createdReservation.getStartTime())
                 .endTime(createdReservation.getEndTime())
-                .message("Reservation created successfully")
+                .message("Reserva creada con éxito")
                 .build();
 
         return new ResponseEntity<>(response, HttpStatus.CREATED);

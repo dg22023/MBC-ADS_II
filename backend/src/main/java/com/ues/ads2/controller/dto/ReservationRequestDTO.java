@@ -11,16 +11,16 @@ import java.time.LocalDateTime;
  */
 @Data
 public class ReservationRequestDTO {
-    
-    @NotNull(message = "User ID is required")
+
+    @NotNull(message = "El campo ID de usuario es requerido")
     private Long userId;
     
-    @NotNull(message = "Space ID is required")
+    @NotNull(message = "El campo ID de espacio es requerido")
     private Long spaceId;
     
-    @NotNull(message = "Start time is required")
+    @NotNull(message = "El campo de inicio es requerido")
     private LocalDateTime startTime;
     
-    @NotNull(message = "End time is required")
+    @NotNull(message = "El campo de fin es requerido")
     private LocalDateTime endTime;
 }

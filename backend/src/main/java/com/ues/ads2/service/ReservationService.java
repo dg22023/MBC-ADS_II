@@ -33,7 +33,7 @@ public class ReservationService {
      * @return List of available spaces
      */
     public List<Space> findAvailableSpaces(LocalDateTime startTime, LocalDateTime endTime) {
-        log.info("Finding available spaces between {} and {}", startTime, endTime);
+        log.info("Buscando espacios disponibles entre {} y {}", startTime, endTime);
         
         List<Space> allSpaces = spaceRepository.findAll();
         List<Reservation> overlappingReservations = reservationRepository.findAll().stream()
@@ -47,8 +47,8 @@ public class ReservationService {
         List<Space> availableSpaces = allSpaces.stream()
                 .filter(space -> !reservedSpaceIds.contains(space.getId()))
                 .collect(Collectors.toList());
-        
-        log.info("Found {} available spaces out of {} total spaces", availableSpaces.size(), allSpaces.size());
+
+        log.info("Se encontraron {} espacios disponibles de un total de {} espacios", availableSpaces.size(), allSpaces.size());
         return availableSpaces;
     }
 
@@ -62,7 +62,7 @@ public class ReservationService {
      */
     @Transactional
     public Reservation createReservation(Reservation reservation) {
-        log.info("Attempting to create reservation for space {} from {} to {}", 
+        log.info("Intentando crear reserva para el espacio {} desde {} hasta {}", 
                  reservation.getSpace().getId(), 
                  reservation.getStartTime(), 
                  reservation.getEndTime());
@@ -75,17 +75,17 @@ public class ReservationService {
         );
 
         if (!overlappingReservations.isEmpty()) {
-            log.warn("Reservation conflict detected for space {} - {} overlapping reservations found", 
+            log.warn("Conflicto de reserva detectado para el espacio {} - {} reservas superpuestas encontradas", 
                      reservation.getSpace().getId(), 
                      overlappingReservations.size());
             throw new ReservationConflictException(
-                    String.format("Space '%s' is already reserved for the selected time. Please choose a different time slot or space.",
+                    String.format("El espacio '%s' ya está reservado para el tiempo seleccionado. Por favor, elija un horario o espacio diferente.",
                                 reservation.getSpace().getName())
             );
         }
 
         Reservation savedReservation = reservationRepository.save(reservation);
-        log.info("Successfully created reservation with ID {} for user {} in space {}", 
+        log.info("Reserva creada con éxito con ID {} para el usuario {} en el espacio {}", 
                  savedReservation.getId(),
                  savedReservation.getUser().getId(),
                  savedReservation.getSpace().getId());
