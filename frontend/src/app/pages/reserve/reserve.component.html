@@ -1,0 +1,98 @@
+
+<div *ngIf="space; else notFound" class="reserva-container">
+  <h2>Reservar: {{space?.name}} ({{space?.type}})</h2>
+  <p>{{space?.description}}</p>
+
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <table class="reserva-table">
+      <tr>
+        <td><label for="type">Tipo de espacio:</label></td>
+        <td>
+          <mat-form-field appearance="fill">
+            <mat-label>Tipo</mat-label>
+            <select matNativeControl formControlName="type" id="type">
+              <option *ngFor="let t of tipos" [value]="t">{{t}}</option>
+            </select>
+          </mat-form-field>
+        </td>
+      </tr>
+      <tr>
+        <td><label for="date">Fecha:</label></td>
+        <td>
+          <mat-form-field appearance="fill">
+            <mat-label>Fecha</mat-label>
+            <input matInput type="date" formControlName="date" id="date">
+          </mat-form-field>
+        </td>
+      </tr>
+      <tr>
+        <td><label for="time">Horario:</label></td>
+        <td>
+          <mat-form-field appearance="fill">
+            <mat-label>Horario</mat-label>
+            <select matNativeControl formControlName="time" id="time">
+              <option *ngFor="let t of availableTimes" [value]="t">{{t}}</option>
+            </select>
+          </mat-form-field>
+        </td>
+      </tr>
+      <tr>
+        <td><label for="capacity">Capacidad:</label></td>
+        <td>
+          <mat-form-field appearance="fill">
+            <mat-label>Capacidad</mat-label>
+            <input matInput type="number" formControlName="capacity" id="capacity" min="1" [max]="space?.capacity || 1">
+          </mat-form-field>
+          <span class="capacidad-info">Máx: {{space?.capacity}}</span>
+        </td>
+      </tr>
+      <tr>
+        <td><label>Equipo:</label></td>
+        <td>
+          <div class="equipos">
+            <mat-checkbox formControlName="proyector">Proyector</mat-checkbox>
+            <mat-checkbox formControlName="pc">PC</mat-checkbox>
+            <mat-checkbox formControlName="otro">Otro</mat-checkbox>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2" style="text-align:center;">
+          <button mat-raised-button color="primary" type="submit">Confirmar Reserva</button>
+        </td>
+      </tr>
+    </table>
+  </form>
+</div>
+
+<ng-template #notFound>
+  <p>Espacio no encontrado.</p>
+</ng-template>
+
+<style>
+.reserva-container {
+  max-width: 600px;
+  margin: 0 auto;
+  background: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px #ccc;
+  padding: 2em;
+}
+.reserva-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 1em;
+}
+.reserva-table td {
+  padding: 0.5em;
+}
+.equipos {
+  display: flex;
+  gap: 1em;
+}
+.capacidad-info {
+  font-size: 0.9em;
+  color: #888;
+  margin-left: 1em;
+}
+</style>

@@ -1,12 +1,14 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-root',
-  imports: [RouterOutlet],
-  templateUrl: './app.html',
-  styleUrl: './app.css'
+	selector: 'app-root',
+	standalone: true,
+	imports: [CommonModule, RouterOutlet],
+	templateUrl: './app.component.html',
+	styleUrls: ['./app.component.css']
 })
 export class App {
-  protected title = 'mbc-adsii-front';
+	protected title = 'mbc-adsii-front';
 }

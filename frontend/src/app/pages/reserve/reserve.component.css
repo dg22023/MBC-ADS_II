@@ -1,0 +1,4 @@
+form{ max-width:420px; }
+label{ display:block; margin:0.5rem 0; }
+input, select{ width:100%; padding:0.4rem; margin-top:0.2rem; }
+button{ margin-top:1rem; padding:0.5rem 1rem; }
