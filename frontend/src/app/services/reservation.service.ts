@@ -46,9 +46,8 @@ export class ReservationService {
     }
   ];
 
-  private reservations: Reservation[] = []; // guardadas en memoria
+  private reservations: Reservation[] = []; 
 
-  // Exponer como observable para que componentes se actualicen
   private reservations$ = new BehaviorSubject<Reservation[]>(this.reservations);
 
   constructor() {}
@@ -66,7 +65,6 @@ export class ReservationService {
   }
 
   addReservation(res: Reservation): Observable<Reservation> {
-    // crear id simple incremental
     res.id = (this.reservations.length ? Math.max(...this.reservations.map(r => r.id || 0)) + 1 : 1);
     this.reservations.push(res);
     this.reservations$.next(this.reservations);

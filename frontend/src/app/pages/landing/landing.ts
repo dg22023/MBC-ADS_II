@@ -1,6 +1,3 @@
-// Duplicate legacy/stub file removed from compilation surface.
-// The real component implementation is in `landing.component.ts`.
-
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -39,10 +36,8 @@ export class Landing implements OnInit {
 	form!: FormGroup;
 	availableTimes: string[] = [];
 	tipos: string[] = ['Aula', 'Laboratorio', 'Sala', 'Otro'];
-	// time slots and end-time options
 	timeSlots: string[] = [];
 	endTimeOptions: string[] = [];
-	// equipment options per type
 	equipmentOptions: string[] = [];
 	equipmentSelected: { [k: string]: boolean } = {};
 	userName = '';
@@ -60,7 +55,6 @@ export class Landing implements OnInit {
 		}
 
 		goToReservation() {
-			// scroll to reservation form
 			setTimeout(() => {
 				const el = document.getElementById('reserva');
 				if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -75,7 +69,6 @@ export class Landing implements OnInit {
 				this.availableTimes = s[0].availableTimes;
 			}
 		});
-		// generar franjas horarias de 06:00 a 21:00 cada 15 minutos
 		this.timeSlots = this.generateTimeSlots('06:00', '21:00', 15);
 		this.endTimeOptions = [...this.timeSlots];
 		this.userName = localStorage.getItem('userName') || '';
@@ -86,7 +79,6 @@ export class Landing implements OnInit {
 			startTime: ['', Validators.required],
 			endTime: ['', Validators.required],
 			capacity: [1, [Validators.required, Validators.min(1)]],
-			// keep legacy boolean controls for compatibility (not used when equipmentOptions is present)
 			proyector: [false],
 			pc: [false],
 			otro: [false]
@@ -99,16 +91,13 @@ export class Landing implements OnInit {
 				type: found?.type || '',
 				capacity: 1
 			});
-			// actualizar opciones de equipo según tipo del espacio seleccionado
 			this.updateEquipmentOptions(found?.type || '');
 		});
 
-		// cuando cambia el tipo, actualizar opciones de equipo
 		this.form.get('type')?.valueChanges.subscribe(t => {
 			this.updateEquipmentOptions(t || '');
 		});
 
-		// cuando cambia startTime, limitar endTimeOptions a valores posteriores
 		this.form.get('startTime')?.valueChanges.subscribe(start => {
 			if (!start) {
 				this.endTimeOptions = [...this.timeSlots];
@@ -116,7 +105,6 @@ export class Landing implements OnInit {
 			}
 			const idx = this.timeSlots.indexOf(start);
 			this.endTimeOptions = idx >= 0 ? this.timeSlots.slice(idx + 1) : [...this.timeSlots];
-			// si el endTime ya no es válido, limpiarlo
 			const curEnd = this.form.get('endTime')?.value;
 			if (curEnd && this.endTimeOptions.indexOf(curEnd) === -1) {
 				this.form.get('endTime')?.setValue('');
@@ -124,7 +112,6 @@ export class Landing implements OnInit {
 		});
 	}
 
-	// genera array de strings 'HH:MM' desde start hasta end, interval en minutos
 	generateTimeSlots(start: string, end: string, intervalMin: number): string[] {
 		const toMinutes = (hms: string) => {
 			const [h, m] = hms.split(':').map(Number);
@@ -151,7 +138,6 @@ export class Landing implements OnInit {
 			'Otro': ['Microfono', 'Extension', 'Adaptador']
 		};
 		this.equipmentOptions = map[type] || ['Proyector', 'PC', 'Pizarra'];
-		// reset selected map
 		this.equipmentSelected = {};
 		this.equipmentOptions.forEach(e => (this.equipmentSelected[e] = false));
 	}
@@ -172,7 +158,6 @@ export class Landing implements OnInit {
 				return;
 			}
 			const time = `${startTime}-${endTime}`;
-			// Formatear la fecha a YYYY-MM-DD
 			const formattedDate = date instanceof Date ? 
 				date.toISOString().split('T')[0] : 
 				date;
@@ -181,7 +166,6 @@ export class Landing implements OnInit {
 			alert('El horario ya está reservado. Elige otro.');
 			return;
 		}
-			// construir lista de equipo: preferir los checkboxes dinámicos
 			const equipment: string[] = Object.keys(this.equipmentSelected).filter(k => this.equipmentSelected[k]);
 			if (!equipment.length) {
 				if (proyector) equipment.push('Proyector');
@@ -198,9 +182,8 @@ export class Landing implements OnInit {
 			equipment
 		};
 				this.svc.addReservation(reservation).subscribe(() => {
-					alert('Reserva confirmada ✅');
+					alert('Reserva confirmada');
 					this.form.reset();
-					// Redirigir al login y pedir que, después de login, regrese a '/'
 					this.router.navigate(['/login'], { queryParams: { redirectTo: '/' } });
 				});
 	}

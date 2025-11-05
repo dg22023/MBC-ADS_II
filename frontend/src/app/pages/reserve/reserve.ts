@@ -1,6 +1,3 @@
-// Duplicate legacy/stub file removed from compilation surface.
-// The real component implementation is in `reserve.component.ts`.
-
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule, FormBuilder, Validators, FormGroup } from '@angular/forms';

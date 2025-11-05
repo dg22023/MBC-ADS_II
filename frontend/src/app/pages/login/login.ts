@@ -1,6 +1,3 @@
-// Duplicate legacy/stub file removed from compilation surface.
-// The real component implementation is in `login.component.ts`.
-
 import { Component } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
