@@ -2,8 +2,10 @@ package com.ues.ads2;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @SpringBootApplication
+@EnableTransactionManagement
 public class Ads2MinibookingBackendApplication {
     public static void main(String[] args) {
      
