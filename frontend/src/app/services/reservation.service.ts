@@ -23,6 +23,27 @@ export class ReservationService {
       type: 'Sala', capacity: 10,
       imageUrl: '', availableTimes: ['08:00','10:00','16:00']
     }
+    ,
+    {
+      id: 4, name: 'Aula 202', description: 'Aula grande con sistema híbrido',
+      type: 'Aula', capacity: 80,
+      imageUrl: '', availableTimes: ['08:00','08:15','08:30','09:00','10:00','18:00']
+    },
+    {
+      id: 5, name: 'Laboratorio 5', description: 'Laboratorio de cómputo avanzado',
+      type: 'Laboratorio', capacity: 24,
+      imageUrl: '', availableTimes: ['07:30','08:00','09:15','11:30','14:00']
+    },
+    {
+      id: 6, name: 'Sala Ejecutiva', description: 'Sala con videoconferencia y TV',
+      type: 'Sala', capacity: 12,
+      imageUrl: '', availableTimes: ['09:00','09:15','10:00','15:00','16:30']
+    },
+    {
+      id: 7, name: 'Aula Híbrida', description: 'Aula con cámaras y micrófonos',
+      type: 'Aula', capacity: 50,
+      imageUrl: '', availableTimes: ['06:00','06:15','12:00','14:45','19:00']
+    }
   ];
 
   private reservations: Reservation[] = []; // guardadas en memoria

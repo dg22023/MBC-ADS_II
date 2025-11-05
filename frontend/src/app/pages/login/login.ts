@@ -5,11 +5,21 @@ import { Component } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule, FormBuilder, Validators } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
 	selector: 'app-login',
 	standalone: true,
-	imports: [CommonModule, ReactiveFormsModule, FormsModule],
+	imports: [
+		CommonModule, 
+		ReactiveFormsModule, 
+		FormsModule,
+		MatFormFieldModule,
+		MatInputModule,
+		MatButtonModule
+	],
 	templateUrl: './login.component.html',
 	styleUrls: ['./login.component.css']
 })
@@ -36,5 +46,9 @@ export class Login {
 		} else {
 			this.router.navigate(['/']);
 		}
+	}
+
+	goToReservation() {
+		this.router.navigate(['/']);
 	}
 }

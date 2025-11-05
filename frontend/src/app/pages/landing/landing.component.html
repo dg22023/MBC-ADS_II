@@ -1,12 +1,98 @@
-<h1>Reservar espacios</h1>
-<div class="grid">
-  <div class="card" *ngFor="let s of spaces">
-    <div class="card-header">{{s.name}} <small>({{s.type}})</small></div>
-    <div class="card-body">
-      <p>{{s.description}}</p>
-      <p>Capacidad: {{s.capacity}}</p>
-      <p>Horarios: <span *ngFor="let t of s.availableTimes">{{t}} </span></p>
-      <button (click)="goToReserve(s)">Reservar</button>
+
+
+<div class="app-layout">
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <div class="brand">MiniBooking</div>
     </div>
-  </div>
+    <nav class="nav">
+      <button class="nav-item" (click)="goToReservation()">Reservar espacio</button>
+      <button class="nav-item" (click)="goToLogin()">Ir a Login</button>
+    </nav>
+  </aside>
+
+  <main class="main-content">
+    <div id="reserva" class="reserva-container">
+      <h1>Reservar espacio</h1>
+      <form [formGroup]="form" (ngSubmit)="submit()">
+    <table class="reserva-table">
+      <tr>
+        <td><label for="spaceId">Espacio:</label></td>
+        <td>
+          <mat-form-field appearance="fill">
+            <mat-label>Espacio</mat-label>
+            <select matNativeControl formControlName="spaceId" id="spaceId">
+              <option *ngFor="let s of spaces" [value]="s.id">{{s.name}} ({{s.type}})</option>
+            </select>
+          </mat-form-field>
+        </td>
+      </tr>
+      <tr>
+        <td><label for="type">Tipo de espacio:</label></td>
+        <td>
+          <mat-form-field appearance="fill">
+            <mat-label>Tipo</mat-label>
+            <select matNativeControl formControlName="type" id="type">
+              <option *ngFor="let t of tipos" [value]="t">{{t}}</option>
+            </select>
+          </mat-form-field>
+        </td>
+      </tr>
+      <tr>
+        <td><label for="date">Fecha:</label></td>
+        <td>
+          <mat-form-field appearance="fill">
+            <mat-label>Fecha</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="date" id="date">
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+        </td>
+      </tr>
+      <tr>
+        <td><label for="time">Horario:</label></td>
+        <td>
+          <div style="display:flex; gap:0.6rem;">
+            <mat-form-field appearance="fill" style="flex:1">
+              <mat-label>Inicio</mat-label>
+              <select matNativeControl formControlName="startTime" id="startTime">
+                <option *ngFor="let t of timeSlots" [value]="t">{{t}}</option>
+              </select>
+            </mat-form-field>
+            <mat-form-field appearance="fill" style="flex:1">
+              <mat-label>Fin</mat-label>
+              <select matNativeControl formControlName="endTime" id="endTime">
+                <option *ngFor="let t of endTimeOptions" [value]="t">{{t}}</option>
+              </select>
+            </mat-form-field>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td><label for="capacity">Capacidad:</label></td>
+        <td>
+          <mat-form-field appearance="fill">
+            <mat-label>Capacidad</mat-label>
+            <input matInput type="number" formControlName="capacity" id="capacity" min="1" [max]="selectedSpace?.capacity || 1">
+          </mat-form-field>
+          <span class="capacidad-info">Máx: {{selectedSpace?.capacity}}</span>
+        </td>
+      </tr>
+      <tr>
+        <td><label>Equipo:</label></td>
+        <td>
+          <div class="equipos">
+            <mat-checkbox *ngFor="let opt of equipmentOptions" [checked]="equipmentSelected[opt]" (change)="onEquipmentChange($event.checked, opt)">{{opt}}</mat-checkbox>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2" class="submit-row">
+          <button mat-raised-button color="primary" type="submit">Confirmar Reserva</button>
+        </td>
+      </tr>
+    </table>
+      </form>
+    </div>
+  </main>
 </div>
