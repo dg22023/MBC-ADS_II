@@ -1,0 +1,4 @@
+/* Minimal styles for AppComponent. Create this file to satisfy styleUrls reference. */
+:host {
+  display: block;
+}

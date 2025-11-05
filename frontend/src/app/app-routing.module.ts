@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LandingComponent } from './pages/landing/landing.component';
-import { ReserveComponent } from './pages/reserve/reserve.component';
-import { LoginComponent } from './pages/login/login.component';
+import { Landing } from './pages/landing/landing';
+import { Reserve } from './pages/reserve/reserve';
+import { Login } from './pages/login/login';
 
 const routes: Routes = [
-  { path: '', component: LandingComponent },
-  { path: 'reserve/:id', component: ReserveComponent },
-  { path: 'login', component: LoginComponent },
+  { path: '', component: Landing },
+  { path: 'reserve/:id', component: Reserve },
+  { path: 'login', component: Login },
   { path: '**', redirectTo: '' }
 ];
 
