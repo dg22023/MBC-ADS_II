@@ -1,0 +1,46 @@
+<div>
+  <h3>Crear Nueva Reserva</h3>
+
+  <div *ngIf="successMessage" class="alert alert-success">
+    {{ successMessage }}
+  </div>
+  <div *ngIf="errorMessage" class="alert alert-danger">
+    {{ errorMessage }}
+  </div>
+
+  <form [formGroup]="bookingForm" (ngSubmit)="onSubmit()">
+    
+    <div class="form-group">
+      <label for="spaceId">Espacio:</label>
+      <select id="spaceId" formControlName="spaceId" class="form-control">
+        <option value="" disabled>Seleccione un espacio...</option>
+        <option *ngFor="let space of spaces$ | async" [value]="space.id">
+          {{ space.name }} (Cap: {{ space.capacity }})
+        </option>
+      </select>
+      <div *ngIf="bookingForm.get('spaceId')?.touched && bookingForm.get('spaceId')?.invalid" class="text-danger">
+        Debe seleccionar un espacio.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="bookingDate">Fecha:</label>
+      <input type="date" id="bookingDate" formControlName="bookingDate" class="form-control">
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col">
+        <label for="startTime">Hora Inicio:</label>
+        <input type="time" id="startTime" formControlName="startTime" class="form-control">
+      </div>
+      <div class="form-group col">
+        <label for="endTime">Hora Fin:</label>
+        <input type="time" id="endTime" formControlName="endTime" class="form-control">
+      </div>
+    </div>
+    
+    <button type="submit" [disabled]="bookingForm.invalid" class="btn btn-primary">
+      Reservar
+    </button>
+  </form>
+</div>
