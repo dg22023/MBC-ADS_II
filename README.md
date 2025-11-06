@@ -1,3 +1,41 @@
-## Un gusto saludarles compañeros, antes de pasar los cambiso a la rama main, y posterior crear las ramas para trabajar los modulos, pedirles que **clonen el repositorio** y se cambie a esta rama *feature/configuracionesIni*.
+#Mini Booking Coworking (MBC-ADS_II)
 
-## Ademas traten de correr la app de springboot, donde esta una pequeña base de la api. Antes crear una base de datos y pase la informacion a un archivo *.env* en la raiz del **backend** para que la app se conecte a su base en local.
+Mini Booking Coworking es un sistema de gestión de reservas para espacios de coworking.  
+Permite administrar las reservas de salas, oficinas y espacios compartidos, gestionando usuarios, horarios, disponibilidad y pagos.  
+El proyecto forma parte del desarrollo académico del curso de Análisis y Diseño de Sistemas II, y busca simular una plataforma funcional de coworking moderno.
+
+---
+
+##Tecnologías principales
+
+- **Frontend:** Angular 17 + Angular Material  
+- **Backend:** Spring Boot (Java 17, Maven)  
+- **Base de Datos:** PostgreSQL  
+- **Contenedores:** Docker y Docker Compose  
+- **Control de versiones:** Git y GitHub  
+
+---
+
+##Funcionalidades principales
+
+- Registro y autenticación de usuarios.  
+- Gestión de espacios disponibles para coworking.  
+- Reserva y cancelación de espacios.  
+- Visualización de disponibilidad en tiempo real.  
+- Administración de usuarios, roles y horarios.  
+- Integración con base de datos PostgreSQL.  
+- Interfaz web moderna y responsiva desarrollada con Angular Material.  
+- Backend REST API con Spring Boot.  
+
+---
+
+##Requisitos previos
+
+Para ejecutar el proyecto necesitas tener instalado:
+
+- **Java 17 o superior**  
+- **Maven**  
+- **Node.js (v18 o superior)**  
+- **Angular CLI**  
+- **PostgreSQL**  
+- **Docker y Docker Compose** *(opcional, solo si deseas ejecutarlo con contenedores)*  
