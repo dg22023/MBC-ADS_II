@@ -1,0 +1,268 @@
+<mat-sidenav-container class="container">
+  <!-- Menú lateral -->
+  <mat-sidenav #sidenav mode="over" class="sidenav" [opened]="false">
+    <div class="menu-content">
+      <button mat-icon-button class="close-btn" (click)="sidenav.close()">
+        <mat-icon>close</mat-icon>
+      </button>
+
+      <h1 class="menu-title">MiniBookingUES</h1>
+      <p class="menu-subtitle">Work · Meet · Create</p>
+
+      <ul class="menu-list">
+        <li (click)="sidenav.close()">Home</li>
+        <li (click)="sidenav.close()">Spaces</li>
+        <li (click)="sidenav.close()">Booking</li>
+        <li (click)="sidenav.close()">Services</li>
+        <li (click)="sidenav.close()">Contact</li>
+      </ul>
+
+      <p class="menu-footer">Find your perfect workspace.</p>
+    </div>
+  </mat-sidenav>
+
+  <!-- Contenido principal -->
+  <mat-sidenav-content>
+    <!-- Navbar -->
+    <mat-toolbar class="toolbar">
+      <button mat-icon-button class="menu-btn" (click)="sidenav.open()">
+        <mat-icon>menu</mat-icon>
+      </button>
+
+      <span class="brand">MiniBookingUES</span>
+      <span class="spacer"></span>
+
+      <div class="nav-actions">
+        <button mat-button class="nav-btn" (click)="onLogin()">Login</button>
+        <button mat-button class="nav-btn" (click)="onSignup()">Sign Up</button>
+        <button mat-flat-button class="book-btn" (click)="onBook()">BOOK NOW</button>
+      </div>
+    </mat-toolbar>
+
+    <!-- Contenido -->
+    <div class="content">
+      <h1>{{ title }}</h1>
+      <p>{{ subtitle }}</p>
+
+      <mat-form-field appearance="outline" class="search-box">
+        <mat-label>Selecciona fecha</mat-label>
+        <input
+          matInput
+          [matDatepicker]="picker"
+          [(ngModel)]="selectedDate"
+          placeholder="Fecha de reserva"
+        />
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+
+      <div class="rooms-container">
+        <mat-card *ngFor="let room of rooms" class="room-card">
+          <mat-card-title>{{ room.name }}</mat-card-title>
+          <mat-card-subtitle>{{ room.subtitle }}</mat-card-subtitle>
+          <mat-card-content>
+            <p>{{ room.description }}</p>
+            <div class="features">
+              <span class="chip" *ngFor="let feature of room.features">{{ feature }}</span>
+            </div>
+          </mat-card-content>
+          <mat-card-actions>
+            <button mat-flat-button class="cta-btn" (click)="onAction(room)">
+              {{ room.cta }}
+            </button>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+<style>
+  .container {
+    height: 100vh;
+  }
+
+  /* === NAVBAR === */
+  .toolbar {
+    background-color: #163633;
+    color: white;
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+  }
+
+
+  .menu-btn mat-icon {
+    color: white !important;
+    font-size: 26px;
+  }
+
+  .brand {
+    font-size: 1.3rem;
+    font-weight: 600;
+  }
+
+  .spacer {
+    flex: 1 1 auto;
+  }
+
+  .nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .nav-btn {
+    color: #ffffff !important;
+    font-weight: 500;
+    text-transform: none;
+    font-size: 0.95rem;
+    transition: color 0.3s ease, text-decoration 0.3s ease;
+  }
+
+  .nav-btn:hover {
+    color: #c5e6ff;
+    text-decoration: underline;
+  }
+
+  .book-btn {
+    background-color: #0051c3;
+    color: white;
+    font-weight: 600;
+    padding: 8px 16px;
+    border-radius: 6px;
+  }
+
+  .book-btn:hover {
+    background-color: #003a91;
+  }
+
+  /* === MENÚ LATERAL === */
+  .sidenav {
+    background-color: rgba(22, 54, 51, 0.97);
+    color: white;
+    width: 35%;
+    min-width: 280px;
+    max-width: 380px;
+  }
+
+  .menu-content {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .close-btn {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    color: white;
+  }
+
+  .menu-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+  }
+
+  .menu-subtitle {
+    font-style: italic;
+    color: #cbd5e1;
+  }
+
+  .menu-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 1rem;
+  }
+
+  .menu-list li {
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin: 0.8rem 0;
+    cursor: pointer;
+    transition: color 0.3s ease;
+  }
+
+  .menu-list li:hover {
+    color: #a2e2d3;
+  }
+
+  .menu-footer {
+    position: absolute;
+    bottom: 20px;
+    font-size: 0.85rem;
+    color: #aaa;
+  }
+
+  /* === CONTENIDO === */
+  .content {
+    padding: 3rem;
+    max-width: 1300px;
+    margin: 2.5rem auto;
+    background-color: #ffffff;
+    border-radius: 14px;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.08);
+  }
+
+  .content h1 {
+    font-size: 2rem;
+    font-weight: 700;
+  }
+
+  .content p {
+    color: #444;
+    margin-bottom: 2rem;
+  }
+
+  .search-box {
+    width: 100%;
+    max-width: 360px;
+    display: block;
+    margin-bottom: 2.5rem;
+  }
+
+  .rooms-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    justify-content: center;
+  }
+
+  .room-card {
+    background: #f9fafb;
+    border-radius: 12px;
+    box-shadow: rgba(0, 0, 0, 0.07) 0px 3px 6px;
+    width: 300px;
+    padding: 0.5rem;
+  }
+
+  .features {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .chip {
+    background-color: #d9f3ec;
+    border-radius: 6px;
+    padding: 4px 10px;
+    font-size: 0.85rem;
+    color: #1c3d3a;
+    font-weight: 500;
+  }
+
+  .cta-btn {
+    background-color: #163633;
+    color: white;
+    font-weight: 600;
+    border-radius: 6px;
+    width: 100%;
+  }
+
+  .cta-btn:hover {
+    background-color: #295a55;
+  }
+</style>
