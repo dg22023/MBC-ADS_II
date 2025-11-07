@@ -1,0 +1,74 @@
+<div class="booking-modal-header">
+  <h3 mat-dialog-title>Crear Nueva Reserva</h3>
+  <button mat-icon-button class="close-modal-btn" (click)="closeModal()" tabindex="-1">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+
+<mat-dialog-content>
+  
+  <div *ngIf="successMessage" class="alert alert-success">
+    {{ successMessage }}
+  </div>
+  <div *ngIf="errorMessage" class="alert alert-danger">
+    {{ errorMessage }}
+  </div>
+
+  <form [formGroup]="bookingForm" (ngSubmit)="onSubmit()" *ngIf="!successMessage">
+    
+    <div class="form-group">
+      <button mat-flat-button type="button" (click)="openSpaceSelector()" color="accent">
+        Seleccionar Espacio
+      </button>
+      <div *ngIf="selectedSpaceName" class="space-selected-display">
+        Espacio: <strong>{{ selectedSpaceName }}</strong>
+      </div>
+      <mat-error *ngIf="bookingForm.get('spaceId')?.touched && bookingForm.get('spaceId')?.invalid">
+        Debe seleccionar un espacio.
+      </mat-error>
+    </div>
+
+    <mat-form-field appearance="fill" class="form-group">
+      <mat-label>Fecha de la Reserva</mat-label>
+      <input matInput [matDatepicker]="picker" formControlName="bookingDate" (dateChange)="bookingForm.get('bookingDate')?.markAsTouched()">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+      <mat-error *ngIf="bookingForm.get('bookingDate')?.invalid && bookingForm.get('bookingDate')?.touched">
+        La fecha es requerida.
+      </mat-error>
+    </mat-form-field>
+
+    <div class="time-row">
+  
+  <mat-form-field appearance="fill" class="form-group">
+    <mat-label>Hora Inicio</mat-label>
+    
+    <input matInput formControlName="startTime" [ngxTimepicker]="timePickerInicio" readonly>
+    
+    <ngx-material-timepicker-toggle matSuffix [for]="timePickerInicio"></ngx-material-timepicker-toggle>
+  
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="form-group">
+    <mat-label>Hora Fin</mat-label>
+    
+    <input matInput formControlName="endTime" [ngxTimepicker]="timePickerFin" readonly>
+    
+    <ngx-material-timepicker-toggle matSuffix [for]="timePickerFin"></ngx-material-timepicker-toggle>
+
+  </mat-form-field>
+
+</div>
+
+<ngx-material-timepicker #timePickerInicio></ngx-material-timepicker>
+<ngx-material-timepicker #timePickerFin></ngx-material-timepicker>
+    
+    <div mat-dialog-actions class="form-actions">
+      <button mat-raised-button color="primary" type="submit" [disabled]="bookingForm.invalid" class="submit-button">
+        Reservar
+      </button>
+    </div>
+
+  </form>
+
+</mat-dialog-content>

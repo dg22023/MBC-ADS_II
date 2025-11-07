@@ -1,1 +1,29 @@
 /* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+/* src/styles.css */
+
+/* --- Arreglo para Datepicker y Timepicker en Modales --- */
+
+/* Esto asegura que el panel del Datepicker (calendario)
+  se muestre por encima del modal (que tiene z-index ~1001).
+*/
+.cdk-overlay-pane.mat-datepicker-popup {
+  z-index: 1050 !important;
+}
+
+/* Esto asegura que el panel del Timepicker (reloj)
+  se muestre por encima del modal.
+*/
+.timepicker-overlay {
+  z-index: 1050 !important;
+}
+
+/* Esto asegura que el fondo oscuro del Timepicker
+  esté justo debajo del reloj, pero encima del modal.
+*/
+.timepicker-backdrop {
+  z-index: 1049 !important;
+}

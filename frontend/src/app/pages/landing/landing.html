@@ -1,0 +1,78 @@
+<mat-sidenav-container class="container">
+  <!-- Menú lateral -->
+  <mat-sidenav #sidenav mode="over" class="sidenav" [opened]="false">
+    <div class="menu-content">
+      <button mat-icon-button class="close-btn" (click)="sidenav.close()">
+        <mat-icon>close</mat-icon>
+      </button>
+
+      <h1 class="menu-title">MiniBookingUES</h1>
+      <p class="menu-subtitle">Work · Meet · Create</p>
+
+      <ul class="menu-list">
+        <li (click)="sidenav.close()">Home</li>
+        <li (click)="openBookingModal(); sidenav.close()">Spaces</li>
+        <li (click)="sidenav.close()">Booking</li>
+        <li (click)="sidenav.close()">Services</li>
+        <li (click)="sidenav.close()">Contact</li>
+      </ul>
+
+      <p class="menu-footer">Find your perfect workspace.</p>
+    </div>
+  </mat-sidenav>
+
+  <!-- Contenido principal -->
+  <mat-sidenav-content>
+    <!-- Navbar -->
+    <mat-toolbar class="toolbar">
+      <button mat-icon-button class="menu-btn" (click)="sidenav.open()">
+        <mat-icon>menu</mat-icon>
+      </button>
+
+      <span class="brand">MiniBookingUES</span>
+      <span class="spacer"></span>
+
+      <div class="nav-actions">
+        <button mat-button class="nav-btn" (click)="onLogin()">Login</button>
+        <button mat-button class="nav-btn" (click)="onSignup()">Sign Up</button>
+        <button mat-flat-button class="book-btn" (click)="onBook()">BOOK NOW</button>
+      </div>
+    </mat-toolbar>
+
+    <!-- Contenido -->
+    <div class="content">
+      <h1>{{ title }}</h1>
+      <p>{{ subtitle }}</p>
+
+      <mat-form-field appearance="outline" class="search-box">
+        <mat-label>Selecciona fecha</mat-label>
+        <input
+          matInput
+          [matDatepicker]="picker"
+          [(ngModel)]="selectedDate"
+          placeholder="Fecha de reserva"
+        />
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+
+      <div class="rooms-container">
+        <mat-card *ngFor="let room of rooms" class="room-card">
+          <mat-card-title>{{ room.name }}</mat-card-title>
+          <mat-card-subtitle>{{ room.subtitle }}</mat-card-subtitle>
+          <mat-card-content>
+            <p>{{ room.description }}</p>
+            <div class="features">
+              <span class="chip" *ngFor="let feature of room.features">{{ feature }}</span>
+            </div>
+          </mat-card-content>
+          <mat-card-actions>
+            <button mat-flat-button class="cta-btn" (click)="onAction(room)">
+              {{ room.cta }}
+            </button>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
