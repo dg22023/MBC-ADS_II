@@ -1,0 +1,19 @@
+<h2 mat-dialog-title>Seleccionar un Espacio</h2>
+
+<mat-dialog-content>
+  <p>Elige el espacio que deseas reservar:</p>
+  
+  <mat-list role="list">
+    <mat-list-item 
+      role="listitem" 
+      *ngFor="let space of spaces$ | async" 
+      (click)="onSpaceSelected(space)"
+      class="space-list-item"> {{ space.name }} (Capacidad: {{ space.capacity }})
+    </mat-list-item>
+  </mat-list>
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onClose()">Cancelar</button>
+</mat-dialog-actions>

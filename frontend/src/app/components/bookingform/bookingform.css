@@ -1,0 +1,51 @@
+.booking-container {
+  max-width: 500px;
+  margin: 20px auto;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.form-group {
+  display: block;
+  margin-top: 15px;
+  width: 100%;
+}
+
+.time-row {
+  display: flex;
+  gap: 20px;
+  width: 100%;
+}
+
+.space-selected-display {
+  margin-top: 12px;
+  font-size: 1.05em;
+  background-color: #f0f8ff;
+  padding: 8px;
+  border-radius: 4px;
+}
+
+.submit-button {
+  margin-top: 20px;
+  width: 100%;
+}
+
+/* Clases genéricas para alertas (similares a Bootstrap) */
+.alert {
+  padding: 10px;
+  border-radius: 4px;
+  margin-bottom: 15px;
+}
+.alert-success {
+  background-color: #d4edda;
+  color: #155724;
+}
+.alert-danger {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+mat-error {
+  font-size: 0.85em;
+}
