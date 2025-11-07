@@ -39,16 +39,29 @@
     </mat-form-field>
 
     <div class="time-row">
-      <mat-form-field appearance="fill" class="form-group">
-        <mat-label>Hora Inicio</mat-label>
-        <input matInput type="time" formControlName="startTime">
-      </mat-form-field>
-      
-      <mat-form-field appearance="fill" class="form-group">
-        <mat-label>Hora Fin</mat-label>
-        <input matInput type="time" formControlName="endTime">
-      </mat-form-field>
-    </div>
+  
+  <mat-form-field appearance="fill" class="form-group">
+    <mat-label>Hora Inicio</mat-label>
+    
+    <input matInput formControlName="startTime" [ngxTimepicker]="timePickerInicio" readonly>
+    
+    <ngx-material-timepicker-toggle matSuffix [for]="timePickerInicio"></ngx-material-timepicker-toggle>
+  
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="form-group">
+    <mat-label>Hora Fin</mat-label>
+    
+    <input matInput formControlName="endTime" [ngxTimepicker]="timePickerFin" readonly>
+    
+    <ngx-material-timepicker-toggle matSuffix [for]="timePickerFin"></ngx-material-timepicker-toggle>
+
+  </mat-form-field>
+
+</div>
+
+<ngx-material-timepicker #timePickerInicio></ngx-material-timepicker>
+<ngx-material-timepicker #timePickerFin></ngx-material-timepicker>
     
     <div mat-dialog-actions class="form-actions">
       <button mat-raised-button color="primary" type="submit" [disabled]="bookingForm.invalid" class="submit-button">
