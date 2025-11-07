@@ -13,7 +13,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 /**
  * REST Controller for managing reservations in the MiniBooking system.
  * Provides endpoints for creating and managing workspace reservations.
@@ -31,7 +30,7 @@ public class ReservationController {
     /**
      * Creates a new reservation for a workspace.
      * Validates availability and prevents duplication by checking for overlapping reservations.
-     *
+     *@param id ID of the reservation to update     * @return Updated reservation
      * @param reservationRequest DTO containing userId, spaceId, startTime, and endTime
      * @return ResponseEntity with the created reservation and HTTP 201 status
      * @throws RuntimeException if user or space not found
@@ -83,4 +82,13 @@ public class ReservationController {
 
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
+     @PutMapping("/{id}")
+public ResponseEntity<ReservationResponseDTO> updateReservation(
+        @PathVariable Long id,
+        @Valid @RequestBody ReservationRequestDTO reservationRequest) {
+
+    ReservationResponseDTO updatedReservation = reservationService.updateReservation(id, reservationRequest);
+    return ResponseEntity.ok(updatedReservation);
 }
+    }
+
