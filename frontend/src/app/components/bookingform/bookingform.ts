@@ -16,18 +16,20 @@ import { MatIconModule } from '@angular/material/icon'; // <-- AÑADIDO: MatIcon
 
 // El componente Modal
 import { SpaceselectorDialog } from '../../models/spaceselector-dialog/spaceselector-dialog';
-
+import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 @Component({
   selector: 'app-bookingform',
   imports: [
     CommonModule,
     ReactiveFormsModule,
+    MatDatepickerModule,
     MatDialogModule,
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    NgxMaterialTimepickerModule,
     MatIconModule // <-- AÑADIDO: Para el botón de cierre
   ],
   standalone:true,
