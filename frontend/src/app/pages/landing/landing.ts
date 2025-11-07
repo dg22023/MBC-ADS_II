@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 // Módulos Angular Material
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -30,9 +31,12 @@ import { MatSidenavModule } from '@angular/material/sidenav';
     MatRippleModule,
     MatSidenavModule
   ],
-  templateUrl: './landing.html'
+  templateUrl: './landing.html',
+  styleUrls: ['./landing.css']
 })
 export class LandingComponent {
+  constructor(private router: Router) {}
+
   title = 'MiniBookingUES — Reserva tu espacio fácil y rápido';
   subtitle =
     'Explora espacios, elige una fecha y selecciona un horario. Al reservar se requerirá autenticación.';
@@ -71,7 +75,11 @@ export class LandingComponent {
   }
 
   onAction(room: any) {
-    console.log('Acción:', room);
+    if (room.id === 1 || room.id === 2) {
+      this.router.navigate(['/rooms', room.id]);
+    } else {
+      console.log('Acción:', room);
+    }
   }
 
   onBook() {
