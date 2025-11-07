@@ -32,13 +32,14 @@ import { Bookingform } from '../../components/bookingform/bookingform';
     MatDatepickerModule,
     MatNativeDateModule,
     MatRippleModule,
-    MatSidenavModule
+    MatSidenavModule,
+    MatDialogModule
   ],
   templateUrl: './landing.html',
   styleUrls: ['./landing.css']
 })
 export class LandingComponent {
-  constructor(private router: Router) {}
+  constructor(private router: Router, private dialog: MatDialog) {}
 
   title = 'MiniBookingUES — Reserva tu espacio fácil y rápido';
   subtitle =
@@ -72,10 +73,6 @@ export class LandingComponent {
       cta: 'Reservar'
     }
   ];
-
-  constructor(private dialog: MatDialog) {}
-
-
 
   onSelectDate(d: Date | null) {
     this.selectedDate = d;
@@ -112,7 +109,7 @@ export class LandingComponent {
     });
 
     // Opcional: Escuchar cuando el modal se cierra
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result: any) => {
       console.log('El modal de reserva se cerró');
       if (result === true) {
         // El 'true' lo enviamos desde el form al reservar con éxito
