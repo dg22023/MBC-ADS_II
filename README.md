@@ -5,6 +5,22 @@ Permite administrar las reservas de salas, oficinas y espacios compartidos, gest
 El proyecto forma parte del desarrollo académico del curso de Análisis y Diseño de Sistemas II, y busca simular una plataforma funcional de coworking moderno.
 
 ---
+Docker
+
+#  Clonar el repositorio
+git clone https://github.com/dg22023/MBC-ADS_II.git
+cd MBC-ADS_II
+
+# (Opcional) Crear archivo de variables de entorno
+cp .env.example .env
+
+# Edita el archivo .env y configura tus variables (por ejemplo, DATABASE_URL, API_URL, etc.)
+
+# Construir y levantar los contenedores en segundo plano
+docker compose up -d --build
+
+# Verificar que los servicios estén corriendo
+docker ps
 
 ##Tecnologías principales
 
