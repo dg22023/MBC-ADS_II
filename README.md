@@ -9,6 +9,7 @@ Docker
 
 #  Clonar el repositorio
 git clone https://github.com/dg22023/MBC-ADS_II.git
+
 cd MBC-ADS_II
 
 # (Opcional) Crear archivo de variables de entorno
