@@ -102,21 +102,17 @@ export class LandingComponent {
   // Este método abre el formulario de reserva
   openBookingModal(): void {
     const dialogRef = this.dialog.open(Bookingform, {
-      width: '600px',        // Un ancho adecuado para el formulario
-      maxWidth: '90vw',      // Responsive en móviles
-      autoFocus: false,      // Evita que el primer campo se enfoque auto.
-      disableClose: true,    // Opcional: Evita que se cierre al hacer clic fuera
+      width: '600px',
+      maxWidth: '90vw',
+      autoFocus: false,
+      disableClose: false,
     });
 
     // Opcional: Escuchar cuando el modal se cierra
     dialogRef.afterClosed().subscribe((result: any) => {
-      console.log('El modal de reserva se cerró');
       if (result === true) {
-        // El 'true' lo enviamos desde el form al reservar con éxito
         console.log('¡Reserva creada! (Podrías recargar datos aquí)');
       }
     });
-
-  
-}
+  }
 }
