@@ -1,27 +1,52 @@
+
 package com.ues.ads2;
 
+import com.ues.ads2.security.JwtRequestFilter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
 public class SegurityConfig {
+
+    @Autowired
+    private JwtRequestFilter jwtRequestFilter;
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+        return authenticationConfiguration.getAuthenticationManager();
+    }
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                // Deshabilitar CSRF que es común para APIs stateless
                 .csrf(csrf -> csrf.disable())
-                // Definir las reglas de autorización
                 .authorizeHttpRequests(auth -> auth
-                        // Permitir todas las peticiones a tus endpoints de spaces
+                        .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/api/v1/spaces/**").permitAll()
-                        // Permitir todas las peticiones a tus endpoints de reservations
                         .requestMatchers("/api/v1/reservations/**").permitAll()
-                        // Requerir autenticación para cualquier otra petición (opcional por ahora)
-                        .anyRequest().authenticated());
+                        .anyRequest().authenticated()
+                )
+                .sessionManagement(session -> session
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                );
+
+        http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }

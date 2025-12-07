@@ -95,7 +95,7 @@ export class LandingComponent {
   }
 
   onSignup() {
-    window.location.href = '/signup';
+    window.location.href = '/register';
   }
 
   // --- ¡NUEVO MÉTODO! ---
