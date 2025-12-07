@@ -7,13 +7,17 @@
 
 <mat-dialog-content>
   
+  <!-- Success message -->
   <div *ngIf="successMessage" class="alert alert-success">
     {{ successMessage }}
   </div>
+  
+  <!-- Error message -->
   <div *ngIf="errorMessage" class="alert alert-danger">
     {{ errorMessage }}
   </div>
 
+  <!-- Form - only show if no success message -->
   <form [formGroup]="bookingForm" (ngSubmit)="onSubmit()" *ngIf="!successMessage">
     
     <div class="form-group">
@@ -64,7 +68,7 @@
 <ngx-material-timepicker #timePickerFin></ngx-material-timepicker>
     
     <div mat-dialog-actions class="form-actions">
-      <button mat-raised-button color="primary" type="submit" [disabled]="bookingForm.invalid" class="submit-button">
+      <button mat-raised-button color="primary" type="submit" class="submit-button">
         Reservar
       </button>
     </div>
