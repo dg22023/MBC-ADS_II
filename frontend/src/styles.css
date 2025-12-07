@@ -10,6 +10,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: #f8fafc;
+  line-height: 1.8;
 }
 
 * {
@@ -81,4 +82,19 @@ html {
 
 ::-webkit-scrollbar-thumb:hover {
   background: #a8a8a8;
+}
+
+/* === SNACKBAR STYLING === */
+::ng-deep .error-snackbar {
+  background-color: #dc3545 !important;
+  color: white !important;
+  font-weight: 500 !important;
+}
+
+::ng-deep .error-snackbar .mat-mdc-button {
+  color: white !important;
+}
+
+::ng-deep .mat-mdc-snack-bar-container {
+  margin-top: 64px !important;
 }

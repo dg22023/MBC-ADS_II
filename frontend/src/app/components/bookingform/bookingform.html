@@ -77,7 +77,7 @@
       <h4>Resumen de Reserva</h4>
       <div class="summary-row">
         <span>Duración:</span>
-        <span>{{ totalHours }} {{ totalHours === 1 ? 'hora' : 'horas' }}</span>
+        <span>{{ totalHours.toFixed(2) }} {{ totalHours === 1 ? 'hora' : 'horas' }}</span>
       </div>
       <div class="summary-row">
         <span>Tarifa:</span>
