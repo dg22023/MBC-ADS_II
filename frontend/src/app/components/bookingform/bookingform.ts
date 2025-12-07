@@ -12,6 +12,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { SpaceselectorDialog } from '../../models/spaceselector-dialog/spaceselector-dialog';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 
@@ -33,7 +34,8 @@ export interface BookingDialogData {
     MatButtonModule,
     MatNativeDateModule,
     NgxMaterialTimepickerModule,
-    MatIconModule
+    MatIconModule,
+    MatSnackBarModule
   ],
   standalone: true,
   templateUrl: './bookingform.html',
@@ -56,6 +58,7 @@ export class Bookingform {
     private dialog: MatDialog,
     private cdr: ChangeDetectorRef,
     private dialogRef: MatDialogRef<Bookingform>,
+    private snackBar: MatSnackBar,
     @Inject(MAT_DIALOG_DATA) public data: BookingDialogData
   ) {
     this.bookingForm = this.fb.group({
@@ -130,7 +133,8 @@ export class Bookingform {
       hours = 0;
     }
 
-    return hours + (minutes / 60);
+    const totalHours = hours + (minutes / 60);
+    return Math.round(totalHours * 100) / 100; // Round to 2 decimal places
   }
 
   onSubmit(): void {
@@ -172,11 +176,23 @@ export class Bookingform {
 
     if (isNaN(startTime.getTime()) || isNaN(endTime.getTime())) {
       this.errorMessage = 'Formato de fecha u hora inválido. Por favor, verifica los campos.';
+      this.snackBar.open('❌ Formato de fecha u hora inválido', 'Cerrar', {
+        duration: 5000,
+        horizontalPosition: 'center',
+        verticalPosition: 'top',
+        panelClass: ['error-snackbar']
+      });
       return;
     }
 
     if (endTime <= startTime) {
       this.errorMessage = 'La hora de fin debe ser posterior a la hora de inicio.';
+      this.snackBar.open('❌ La hora de fin debe ser posterior a la hora de inicio', 'Cerrar', {
+        duration: 5000,
+        horizontalPosition: 'center',
+        verticalPosition: 'top',
+        panelClass: ['error-snackbar']
+      });
       return;
     }
 
@@ -202,6 +218,12 @@ export class Bookingform {
       error: (err) => {
         this.errorMessage = err.message;
         this.successMessage = null;
+        this.snackBar.open('❌ Error: ' + err.message, 'Cerrar', {
+          duration: 7000,
+          horizontalPosition: 'center',
+          verticalPosition: 'top',
+          panelClass: ['error-snackbar']
+        });
         this.cdr.detectChanges();
       }
     });
