@@ -1,34 +1,46 @@
+// src/app/auth/role.guard.ts
 import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot, Router } from '@angular/router';
-import { Observable, of } from 'rxjs';
-import { Auth0Service } from '../services/auth0.service';
-import { map, catchError } from 'rxjs/operators';
+import { CanActivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { AuthService } from '../services/auth.service';
+import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RoleGuard implements CanActivate {
+  constructor(private auth: AuthService, private router: Router) {}
 
-  constructor(private auth: Auth0Service, private router: Router) {}
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
+    // expected roles spelled in route data as array: data.roles = ['admin']
+    const expectedRoles: string[] = route.data['roles'] || [];
 
-  canActivate(
-    route: ActivatedRouteSnapshot
-  ): Observable<boolean> {
-    const expectedRoles: string[] = route.data['roles'];
-
-    return this.auth.getUserRoles().pipe(
-      map(userRoles => {
-        const hasRole = userRoles.some(role => expectedRoles.includes(role));
-        if (!hasRole) {
-          this.router.navigate(['/unauthorized']); // o tu ruta de error
+    return this.auth.user$().pipe(
+      map(user => {
+        if (!user) {
+          // not logged in -> redirect to login
+          this.auth.login(state.url);
+          return false;
         }
-        return hasRole;
-      }),
-      catchError(() => {
-        this.router.navigate(['/unauthorized']);
-        return of(false);
+
+        // user may not have roles claim; assume roles in user['https://minibooking.com/roles'] or user['roles']
+        const userRoles: any = (user as any)?.['https://minibooking.com/roles'] || (user as any)?.roles || [];
+
+        if (!expectedRoles || expectedRoles.length === 0) {
+          // no role requirement
+          return true;
+        }
+
+        // ensure array and compare
+        const hasRole = Array.isArray(userRoles) && userRoles.some((r: any) => expectedRoles.includes(r));
+        if (!hasRole) {
+          // redirect to landing or unauthorized page
+          this.router.navigate(['/landing']);
+          return false;
+        }
+
+        return true;
       })
     );
   }
 }
-

@@ -1,67 +1,54 @@
+// src/app/services/auth0.service.ts
 import { Injectable } from '@angular/core';
-import { AuthService } from '@auth0/auth0-angular';
-import { Observable, map } from 'rxjs';
-import { environment } from '../environments/environment';
+import { AuthService as Auth0AngularService } from '@auth0/auth0-angular';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class Auth0Service {
+  constructor(private auth: Auth0AngularService) {}
 
-  constructor(private auth: AuthService) {}
+  /**
+   * Abre el login y manda una ruta destino que podrá usarse después del login.
+   * redirectPath: ejemplo '/rooms/1' o '/' por defecto.
+   */
+  login(redirectPath: string = '/') {
+    this.auth.loginWithRedirect({
+      appState: { target: redirectPath }
+    });
+  }
 
-  // Estado de autenticación
-  get isAuthenticated$(): Observable<boolean> {
+  /**
+   * Abre la pantalla de signup (hint) y manda la ruta destino.
+   * Si la versión del SDK no acepta screen_hint, puedes quitarla;
+   * normalmente funciona en la mayoría de integraciones.
+   */
+  signup(redirectPath: string = '/') {
+    this.auth.loginWithRedirect({
+      screen_hint: 'signup',
+      appState: { target: redirectPath }
+    } as any); // 'as any' por si la definición de tipos no incluye screen_hint en tu versión
+  }
+
+  /**
+   * Logout: usar logoutParams.returnTo para evitar el error de tipos
+   */
+  logout() {
+    this.auth.logout({ logoutParams: { returnTo: window.location.origin } });
+  }
+
+  /**
+   * Observable que indica si el usuario está autenticado
+   */
+  isAuthenticated$(): Observable<boolean> {
     return this.auth.isAuthenticated$;
   }
 
-  // Datos del usuario
-  get user$(): Observable<any> {
+  /**
+   * Observable con el perfil del usuario (o null)
+   */
+  user$(): Observable<any> {
     return this.auth.user$;
-  }
-
-  // Login
-  login(): void {
-    this.auth.loginWithRedirect({
-      authorizationParams: {
-        redirect_uri: window.location.origin,
-        ui_locales: 'es'
-      }
-    });
-  }
-
-  //Registro
-  register(): void {
-    this.auth.loginWithRedirect({
-      authorizationParams: {
-        redirect_uri: window.location.origin,
-        screen_hint: 'signup',
-        ui_locales: 'es'
-      }
-    });
-  }
-
-  // Logout
-  logout(): void {
-    this.auth.logout({ 
-      logoutParams: { returnTo: window.location.origin } 
-    });
-  }
-
-  // Obtener roles
-  getUserRoles(): Observable<string[]> {
-    return this.user$.pipe(
-      map(user => {
-        const namespace = environment.auth.namespace;
-        return user?.[`${namespace}roles`] || [];
-      })
-    );
-  }
-
-  // Verificar si tiene un rol específico
-  hasRole(role: string): Observable<boolean> {
-    return this.getUserRoles().pipe(
-      map(roles => roles.includes(role))
-    );
   }
 }

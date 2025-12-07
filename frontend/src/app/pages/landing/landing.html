@@ -1,4 +1,6 @@
+<!-- src/app/pages/landing/landing.html -->
 <mat-sidenav-container class="container">
+
   <!-- Menú lateral -->
   <mat-sidenav #sidenav mode="over" class="sidenav" [opened]="false">
     <div class="menu-content">
@@ -11,7 +13,7 @@
 
       <ul class="menu-list">
         <li (click)="sidenav.close()">Home</li>
-        <li (click)="openBookingModal(); sidenav.close()">Spaces</li>
+        <li (click)="sidenav.close()">Spaces</li>
         <li (click)="sidenav.close()">Booking</li>
         <li (click)="sidenav.close()">Services</li>
         <li (click)="sidenav.close()">Contact</li>
@@ -23,7 +25,7 @@
 
   <!-- Contenido principal -->
   <mat-sidenav-content>
-    <!-- Navbar -->
+    <!-- Navbar (toolbar) -->
     <mat-toolbar class="toolbar">
       <button mat-icon-button class="menu-btn" (click)="sidenav.open()">
         <mat-icon>menu</mat-icon>
@@ -46,12 +48,7 @@
 
       <mat-form-field appearance="outline" class="search-box">
         <mat-label>Selecciona fecha</mat-label>
-        <input
-          matInput
-          [matDatepicker]="picker"
-          [(ngModel)]="selectedDate"
-          placeholder="Fecha de reserva"
-        />
+        <input matInput [matDatepicker]="picker" [(ngModel)]="selectedDate" />
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
       </mat-form-field>
@@ -60,12 +57,15 @@
         <mat-card *ngFor="let room of rooms" class="room-card">
           <mat-card-title>{{ room.name }}</mat-card-title>
           <mat-card-subtitle>{{ room.subtitle }}</mat-card-subtitle>
+
           <mat-card-content>
             <p>{{ room.description }}</p>
+
             <div class="features">
-              <span class="chip" *ngFor="let feature of room.features">{{ feature }}</span>
+              <span class="chip" *ngFor="let f of room.features">{{ f }}</span>
             </div>
           </mat-card-content>
+
           <mat-card-actions>
             <button mat-flat-button class="cta-btn" (click)="onAction(room)">
               {{ room.cta }}

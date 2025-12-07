@@ -1,0 +1,15 @@
+/* frontend/src/app/app.scss */
+:root {
+  --primary: #0b61e2;
+  --accent: #ad1d7d;
+}
+
+body {
+  margin: 0;
+  font-family: "Inter", "Roboto", "Helvetica", sans-serif;
+  background: #faf7fb;
+}
+
+main {
+  padding: 28px;
+}
