@@ -14,7 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 /**
- * REST Controller for managing reservations in the MiniBooking system.
+ * REST Controller for managing reservations in the Mini-Booking system.
  * Provides endpoints for creating and managing workspace reservations.
  */
 @RestController
