@@ -1,22 +1,20 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Bookingservice } from '../../services/bookingservice/bookingservice';
 import { Space } from '../../models/booking/booking';
-import { Observable } from 'rxjs'; // <-- No se usa, pero lo dejo por si acaso
 
 // Importaciones de Angular Material
-import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog'; // <-- AÑADIDO: MatDialogRef
+import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core'; 
-import { MatIconModule } from '@angular/material/icon'; // <-- AÑADIDO: MatIconModule
-
-// El componente Modal
+import { MatIconModule } from '@angular/material/icon';
 import { SpaceselectorDialog } from '../../models/spaceselector-dialog/spaceselector-dialog';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
+
 @Component({
   selector: 'app-bookingform',
   imports: [
@@ -27,12 +25,11 @@ import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    MatDatepickerModule,
     MatNativeDateModule,
     NgxMaterialTimepickerModule,
-    MatIconModule // <-- AÑADIDO: Para el botón de cierre
+    MatIconModule
   ],
-  standalone:true,
+  standalone: true,
   templateUrl: './bookingform.html',
   styleUrl: './bookingform.css'
 })
@@ -45,9 +42,8 @@ export class Bookingform {
   constructor(
     private fb: FormBuilder,
     private bookingService: Bookingservice,
-    private dialog: MatDialog, // Servicio para abrir *otros* modales
-    
-    // AÑADIDO: Referencia a *este* modal para poder cerrarlo
+    private dialog: MatDialog,
+    private cdr: ChangeDetectorRef,
     private dialogRef: MatDialogRef<Bookingform> 
   ) {
     this.bookingForm = this.fb.group({
@@ -93,8 +89,35 @@ export class Bookingform {
     const formValues = this.bookingForm.value;
 
     // Combinar Fecha y Hora en objetos Date
-    const startTime = new Date(`${formValues.bookingDate}T${formValues.startTime}`);
-    const endTime = new Date(`${formValues.bookingDate}T${formValues.endTime}`);
+    const bookingDate = new Date(formValues.bookingDate);
+    const dateStr = bookingDate.toISOString().split('T')[0]; // YYYY-MM-DD
+    
+    // Convert 12-hour format to 24-hour format
+    const convert12to24 = (time12h: string): string => {
+      const [time, modifier] = time12h.split(' ');
+      let [hours, minutes] = time.split(':');
+      
+      if (hours === '12') {
+        hours = '00';
+      }
+      
+      if (modifier === 'PM') {
+        hours = String(parseInt(hours, 10) + 12);
+      }
+      
+      return `${hours.padStart(2, '0')}:${minutes}`;
+    };
+    
+    const startTime24 = convert12to24(formValues.startTime);
+    const endTime24 = convert12to24(formValues.endTime);
+    
+    const startTime = new Date(`${dateStr}T${startTime24}:00`);
+    const endTime = new Date(`${dateStr}T${endTime24}:00`);
+
+    if (isNaN(startTime.getTime()) || isNaN(endTime.getTime())) {
+      this.errorMessage = 'Formato de fecha u hora inválido. Por favor, verifica los campos.';
+      return;
+    }
 
     if (endTime <= startTime) {
       this.errorMessage = 'La hora de fin debe ser posterior a la hora de inicio.';
@@ -102,40 +125,37 @@ export class Bookingform {
     }
 
     const newBookingData = {
-      spaceId: formValues.spaceId,
-      userId: 'mock-user-123',
+      spaceId: Number(formValues.spaceId),
+      userId: 1, // TODO: Obtener del usuario autenticado (temporal: usar ID 1)
       startTime: startTime,
       endTime: endTime
     };
 
     // Llamar al servicio
     this.bookingService.createBooking(newBookingData).subscribe({
-      next: (createdBooking) => {
-        if (createdBooking) {
-          this.successMessage = `¡Reserva creada! ID: ${createdBooking.id} para ${this.selectedSpaceName}`;
-          
-          // --- MODIFICADO ---
-          // En lugar de resetear el form, esperamos 1.5s y cerramos el modal
-          // enviando 'true' para avisar al LandingComponent que todo salió bien.
-          setTimeout(() => {
-            this.dialogRef.close(true);
-          }, 1500); // 1.5 segundos para que el usuario lea el mensaje
-        }
+      next: (response) => {
+        this.successMessage = `¡Reserva creada exitosamente! ${response.message}`;
+        this.errorMessage = null;
+        this.cdr.detectChanges();
+        
+        // Cerrar el modal después de mostrar el mensaje de éxito
+        setTimeout(() => {
+          this.dialogRef.close(true);
+        }, 3000);
       },
       error: (err) => {
-        // Captura el error del servicio
         this.errorMessage = err.message;
+        this.successMessage = null;
+        this.cdr.detectChanges();
       }
     });
     
   }
 
   /**
-   * Método para el botón 'X' de cancelar
-   * (Este método ya lo tenías, pero ahora funcionará
-   * gracias a la inyección de MatDialogRef)
+   * Cierra el modal sin guardar cambios
    */
   closeModal(): void {
-    this.dialogRef.close(); // Cierra el modal sin enviar datos
+    this.dialogRef.close();
   }
 }
