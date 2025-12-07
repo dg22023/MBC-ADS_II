@@ -1,19 +1,25 @@
-import { Component, ChangeDetectorRef } from '@angular/core';
+import { Component, ChangeDetectorRef, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Bookingservice } from '../../services/bookingservice/bookingservice';
 import { Space } from '../../models/booking/booking';
 
 // Importaciones de Angular Material
-import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog, MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core'; 
+import { MatNativeDateModule } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
 import { SpaceselectorDialog } from '../../models/spaceselector-dialog/spaceselector-dialog';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
+
+export interface BookingDialogData {
+  spaceName?: string;
+  spaceId?: number;
+  spacePrice?: string;
+}
 
 @Component({
   selector: 'app-bookingform',
@@ -38,28 +44,43 @@ export class Bookingform {
   errorMessage: string | null = null;
   successMessage: string | null = null;
   selectedSpaceName: string | null = null;
+  preSelectedSpace: boolean = false;
+  spacePrice: string = '$0';
+  spacePriceValue: number = 0;
+  totalHours: number = 0;
+  paymentMethod: 'card' | 'paypal' = 'card';
 
   constructor(
     private fb: FormBuilder,
     private bookingService: Bookingservice,
     private dialog: MatDialog,
     private cdr: ChangeDetectorRef,
-    private dialogRef: MatDialogRef<Bookingform> 
+    private dialogRef: MatDialogRef<Bookingform>,
+    @Inject(MAT_DIALOG_DATA) public data: BookingDialogData
   ) {
     this.bookingForm = this.fb.group({
-      spaceId: ['', Validators.required], 
+      spaceId: ['', Validators.required],
       bookingDate: ['', Validators.required],
       startTime: ['', Validators.required],
       endTime: ['', Validators.required],
     });
+
+    // If space data is provided, pre-fill the form
+    if (data?.spaceName && data?.spaceId) {
+      this.preSelectedSpace = true;
+      this.selectedSpaceName = data.spaceName;
+      this.spacePrice = data.spacePrice || '$0';
+      this.spacePriceValue = parseFloat(this.spacePrice.replace('$', '').replace('/hour', ''));
+      this.bookingForm.patchValue({ spaceId: data.spaceId });
+    }
   }
-  
+
 
   /**
    * Abre el modal para seleccionar el espacio.
    */
   openSpaceSelector(): void {
-    const dialogRef = this.dialog.open(SpaceselectorDialog , {
+    const dialogRef = this.dialog.open(SpaceselectorDialog, {
       width: '400px',
     });
 
@@ -77,6 +98,41 @@ export class Bookingform {
     });
   }
 
+  /**
+   * Calculate total hours when date/time changes
+   */
+  onDateTimeChange(): void {
+    const startTime = this.bookingForm.get('startTime')?.value;
+    const endTime = this.bookingForm.get('endTime')?.value;
+
+    if (startTime && endTime) {
+      const start = this.parseTime(startTime);
+      const end = this.parseTime(endTime);
+
+      if (end > start) {
+        this.totalHours = end - start;
+      } else {
+        this.totalHours = 0;
+      }
+    }
+  }
+
+  /**
+   * Parse time string (12-hour format) to hours as number
+   */
+  private parseTime(timeStr: string): number {
+    const [time, modifier] = timeStr.split(' ');
+    let [hours, minutes] = time.split(':').map(Number);
+
+    if (modifier === 'PM' && hours !== 12) {
+      hours += 12;
+    } else if (modifier === 'AM' && hours === 12) {
+      hours = 0;
+    }
+
+    return hours + (minutes / 60);
+  }
+
   onSubmit(): void {
     this.errorMessage = null;
     this.successMessage = null;
@@ -91,26 +147,26 @@ export class Bookingform {
     // Combinar Fecha y Hora en objetos Date
     const bookingDate = new Date(formValues.bookingDate);
     const dateStr = bookingDate.toISOString().split('T')[0]; // YYYY-MM-DD
-    
+
     // Convert 12-hour format to 24-hour format
     const convert12to24 = (time12h: string): string => {
       const [time, modifier] = time12h.split(' ');
       let [hours, minutes] = time.split(':');
-      
+
       if (hours === '12') {
         hours = '00';
       }
-      
+
       if (modifier === 'PM') {
         hours = String(parseInt(hours, 10) + 12);
       }
-      
+
       return `${hours.padStart(2, '0')}:${minutes}`;
     };
-    
+
     const startTime24 = convert12to24(formValues.startTime);
     const endTime24 = convert12to24(formValues.endTime);
-    
+
     const startTime = new Date(`${dateStr}T${startTime24}:00`);
     const endTime = new Date(`${dateStr}T${endTime24}:00`);
 
@@ -134,10 +190,10 @@ export class Bookingform {
     // Llamar al servicio
     this.bookingService.createBooking(newBookingData).subscribe({
       next: (response) => {
-        this.successMessage = `¡Reserva creada exitosamente! ${response.message}`;
+        this.successMessage = `${response.message}`;
         this.errorMessage = null;
         this.cdr.detectChanges();
-        
+
         // Cerrar el modal después de mostrar el mensaje de éxito
         setTimeout(() => {
           this.dialogRef.close(true);
@@ -149,7 +205,7 @@ export class Bookingform {
         this.cdr.detectChanges();
       }
     });
-    
+
   }
 
   /**

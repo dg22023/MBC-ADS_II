@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 /**
- * REST Controller for managing spaces in the MiniBooking system.
+ * REST Controller for managing spaces in the Mini-Booking system.
  * Provides endpoints for retrieving spaces and checking availability.
  */
 @RestController

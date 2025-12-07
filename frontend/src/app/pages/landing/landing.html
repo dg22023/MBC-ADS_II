@@ -1,78 +1,67 @@
-<!-- src/app/pages/landing/landing.html -->
-<mat-sidenav-container class="container">
-
-  <!-- Menú lateral -->
-  <mat-sidenav #sidenav mode="over" class="sidenav" [opened]="false">
-    <div class="menu-content">
-      <button mat-icon-button class="close-btn" (click)="sidenav.close()">
-        <mat-icon>close</mat-icon>
+<!-- Hero Section -->
+<div class="hero-section">
+  <div class="hero-content">
+    <h1 class="hero-title">Bienvenido a<br>Mini-Booking</h1>
+    <p class="hero-subtitle">Tu Solución Inteligente de Espacios de Coworking</p>
+    <p class="hero-description">
+      Reserva salas de reuniones, escritorios privados y espacios colaborativos al instante. 
+      Ya sea que necesites un rincón tranquilo para concentrarte o una sala de conferencias moderna para tu equipo, 
+      MiniBooking lo hace simple.
+    </p>
+    
+    <div class="hero-actions">
+      <button mat-raised-button class="primary-cta" routerLink="/spaces">
+        <mat-icon>search</mat-icon>
+        Explorar Espacios
       </button>
-
-      <h1 class="menu-title">MiniBookingUES</h1>
-      <p class="menu-subtitle">Work · Meet · Create</p>
-
-      <ul class="menu-list">
-        <li (click)="sidenav.close()">Home</li>
-        <li (click)="sidenav.close()">Spaces</li>
-        <li (click)="sidenav.close()">Booking</li>
-        <li (click)="sidenav.close()">Services</li>
-        <li (click)="sidenav.close()">Contact</li>
-      </ul>
-
-      <p class="menu-footer">Find your perfect workspace.</p>
-    </div>
-  </mat-sidenav>
-
-  <!-- Contenido principal -->
-  <mat-sidenav-content>
-    <!-- Navbar (toolbar) -->
-    <mat-toolbar class="toolbar">
-      <button mat-icon-button class="menu-btn" (click)="sidenav.open()">
-        <mat-icon>menu</mat-icon>
+      <button mat-stroked-button class="secondary-cta" routerLink="/about">
+        <mat-icon>info</mat-icon>
+        Saber Más
       </button>
-
-      <span class="brand">MiniBookingUES</span>
-      <span class="spacer"></span>
-
-      <div class="nav-actions">
-        <button mat-button class="nav-btn" (click)="onLogin()">Login</button>
-        <button mat-button class="nav-btn" (click)="onSignup()">Sign Up</button>
-        <button mat-flat-button class="book-btn" (click)="openBookingModal()">BOOK NOW</button>
-      </div>
-    </mat-toolbar>
-
-    <!-- Contenido -->
-    <div class="content">
-      <h1>{{ title }}</h1>
-      <p>{{ subtitle }}</p>
-
-      <mat-form-field appearance="outline" class="search-box">
-        <mat-label>Selecciona fecha</mat-label>
-        <input matInput [matDatepicker]="picker" [(ngModel)]="selectedDate" />
-        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
-      </mat-form-field>
-
-      <div class="rooms-container">
-        <mat-card *ngFor="let room of rooms" class="room-card">
-          <mat-card-title>{{ room.name }}</mat-card-title>
-          <mat-card-subtitle>{{ room.subtitle }}</mat-card-subtitle>
-
-          <mat-card-content>
-            <p>{{ room.description }}</p>
-
-            <div class="features">
-              <span class="chip" *ngFor="let f of room.features">{{ f }}</span>
-            </div>
-          </mat-card-content>
-
-          <mat-card-actions>
-            <button mat-flat-button class="cta-btn" (click)="onAction(room)">
-              {{ room.cta }}
-            </button>
-          </mat-card-actions>
-        </mat-card>
-      </div>
     </div>
-  </mat-sidenav-content>
-</mat-sidenav-container>
+  </div>
+  
+  <div class="hero-image">
+    <img src="/images/Logo.png" alt="Mini-Booking" class="hero-logo">
+  </div>
+</div>
+
+<!-- Features Section -->
+<div class="features-section">
+  <h2 class="section-title">¿Por Qué Elegir MiniBooking?</h2>
+  
+  <div class="features-grid">
+    <mat-card class="feature-card">
+      <mat-icon class="feature-icon">event_available</mat-icon>
+      <h3>Reserva Instantánea</h3>
+      <p>Reserva tu espacio en segundos con nuestro intuitivo sistema de reservas</p>
+    </mat-card>
+
+    <mat-card class="feature-card">
+      <mat-icon class="feature-icon">meeting_room</mat-icon>
+      <h3>Espacios Flexibles</h3>
+      <p>Desde escritorios privados hasta salas de conferencias - encuentra el espacio perfecto para tus necesidades</p>
+    </mat-card>
+
+    <mat-card class="feature-card">
+      <mat-icon class="feature-icon">verified</mat-icon>
+      <h3>Ubicaciones Verificadas</h3>
+      <p>Todos los espacios están verificados y mantenidos con los más altos estándares</p>
+    </mat-card>
+
+    <mat-card class="feature-card">
+      <mat-icon class="feature-icon">schedule</mat-icon>
+      <h3>Acceso 24/7</h3>
+      <p>Reserva y accede a espacios en cualquier momento que se ajuste a tu horario</p>
+    </mat-card>
+  </div>
+</div>
+
+<!-- CTA Section -->
+<div class="cta-section">
+  <h2>¿Listo para Encontrar Tu Espacio de Trabajo Perfecto?</h2>
+  <p>Únete a miles de profesionales que confían en Mini-Booking para sus necesidades de espacio de trabajo</p>
+  <button mat-raised-button class="cta-large" routerLink="/spaces">
+    Comenzar Ahora
+  </button>
+</div>

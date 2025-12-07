@@ -1,0 +1,109 @@
+<mat-sidenav-container class="container">
+  <!-- Menú lateral -->
+  <mat-sidenav #sidenav mode="over" class="sidenav" [opened]="false">
+    <div class="menu-content">
+      <button mat-icon-button class="close-btn" (click)="sidenav.close()">
+        <mat-icon>close</mat-icon>
+      </button>
+
+      <h1 class="menu-title">MiniBooking</h1>
+      <p class="menu-subtitle">Work · Meet · Create</p>
+
+      <ul class="menu-list">
+        <li routerLink="/" (click)="sidenav.close()">Home</li>
+        <li routerLink="/spaces" (click)="sidenav.close()">Browse Spaces</li>
+        <li (click)="sidenav.close()">About</li>
+        <li (click)="sidenav.close()">Contact</li>
+      </ul>
+
+      <p class="menu-footer">Find your perfect workspace.</p>
+    </div>
+  </mat-sidenav>
+
+  <!-- Contenido principal -->
+  <mat-sidenav-content>
+    <!-- Navbar -->
+    <mat-toolbar class="toolbar">
+      <button mat-icon-button class="menu-btn" (click)="sidenav.open()">
+        <mat-icon>menu</mat-icon>
+      </button>
+
+      <span class="brand">MiniBooking</span>
+      <span class="spacer"></span>
+
+      <div class="nav-actions">
+        <button mat-button class="nav-btn" routerLink="/spaces">Browse Spaces</button>
+        <button mat-button class="nav-btn" (click)="onLogin()">Login</button>
+        <button mat-flat-button class="book-btn" routerLink="/spaces">BOOK NOW</button>
+      </div>
+    </mat-toolbar>
+
+    <!-- Hero Section -->
+    <div class="hero-section">
+      <div class="hero-content">
+        <h1 class="hero-title">Welcome to Mini-Booking</h1>
+        <p class="hero-subtitle">Your Smart Coworking Space Solution</p>
+        <p class="hero-description">
+          Book meeting rooms, private desks, and collaborative spaces instantly. 
+          Whether you need a quiet corner to focus or a modern conference room for your team, 
+          MiniBooking makes it simple.
+        </p>
+        
+        <div class="hero-actions">
+          <button mat-raised-button class="primary-cta" routerLink="/spaces">
+            <mat-icon>search</mat-icon>
+            Browse Spaces
+          </button>
+          <button mat-stroked-button class="secondary-cta">
+            <mat-icon>info</mat-icon>
+            Learn More
+          </button>
+        </div>
+      </div>
+      
+      <div class="hero-image">
+        <mat-icon class="hero-icon">business</mat-icon>
+      </div>
+    </div>
+
+    <!-- Features Section -->
+    <div class="features-section">
+      <h2 class="section-title">Why Choose MiniBooking?</h2>
+      
+      <div class="features-grid">
+        <mat-card class="feature-card">
+          <mat-icon class="feature-icon">event_available</mat-icon>
+          <h3>Instant Booking</h3>
+          <p>Reserve your space in seconds with our intuitive booking system</p>
+        </mat-card>
+
+        <mat-card class="feature-card">
+          <mat-icon class="feature-icon">meeting_room</mat-icon>
+          <h3>Flexible Spaces</h3>
+          <p>From private desks to conference rooms - find the perfect space for your needs</p>
+        </mat-card>
+
+        <mat-card class="feature-card">
+          <mat-icon class="feature-icon">verified</mat-icon>
+          <h3>Verified Locations</h3>
+          <p>All spaces are verified and maintained to the highest standards</p>
+        </mat-card>
+
+        <mat-card class="feature-card">
+          <mat-icon class="feature-icon">schedule</mat-icon>
+          <h3>24/7 Access</h3>
+          <p>Book and access spaces anytime that works for your schedule</p>
+        </mat-card>
+      </div>
+    </div>
+
+    <!-- CTA Section -->
+    <div class="cta-section">
+      <h2>Ready to Find Your Perfect Workspace?</h2>
+      <p>Join thousands of professionals who trust MiniBooking for their workspace needs</p>
+      <button mat-raised-button class="cta-large" routerLink="/spaces">
+        Get Started Now
+      </button>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

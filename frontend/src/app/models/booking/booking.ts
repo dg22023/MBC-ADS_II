@@ -2,8 +2,11 @@
 export interface Space {
   id: number;
   name: string;
-  type: 'DESK' | 'MEETING_ROOM';
+  type: 'DESK' | 'MEETING_ROOM' | 'WORKSHOP' | 'OFFICE' | 'BOARDROOM' | 'STUDIO' | 'POD' | 'COLLABORATION' | 'TRAINING' | 'PODCAST';
   capacity: number;
+  subtitle?: string;
+  description?: string;
+  pricePerHour?: number;
 }
 
 export interface Booking {
