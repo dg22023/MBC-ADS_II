@@ -1,13 +1,13 @@
 export const environment = {
-    production: true,
-    apiUrl: 'YOUR_PRODUCTION_API_URL', // Reemplaza con la URL de tu backend en producción
-    auth: {
-      domain: 'YOUR_AUTH0_DOMAIN', // Reemplaza con tu Dominio de Auth0
-      clientId: 'YOUR_AUTH0_CLIENT_ID', // Reemplaza con tu Client ID de Auth0
-      authorizationParams: {
-        audience: 'YOUR_API_IDENTIFIER', // Reemplaza con el Identificador (Audience) de tu API
-        redirect_uri: window.location.origin,
-      },
-      namespace: 'https://minibooking.com/roles', // Reemplaza con tu Namespace de Auth0 para roles
-    }
+  production: true,
+  apiUrl: 'https://mbc-ads-ii-back.onrender.com/api',
+  auth: {
+    domain: 'dev-1rwd24w1u2co50m4.us.auth0.com', // tu dominio Auth0
+    clientId: '4suGMaKauhByYLy4c6lh11ATeVgUtgvG', // tu clientId
+    authorizationParams: {
+      audience: 'https://dev-1rwd24w1u2co50m4.us.auth0.com/api/v2/', // tu audience
+      redirect_uri: window.location.origin
+    },
+    namespace: 'https://minibooking.com/roles'
+  }
 };
