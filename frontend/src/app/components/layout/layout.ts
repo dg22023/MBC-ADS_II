@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
+import { Auth0Service } from '../../services/auth0.service';
 
 // Módulos Angular Material
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -28,7 +29,10 @@ import { MatListModule } from '@angular/material/list';
 export class LayoutComponent {
   currentRoute: string = '';
 
-  constructor(private router: Router) {
+  constructor(
+    private router: Router,
+    private auth0Service: Auth0Service
+  ) {
     // Track current route for active link highlighting
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
@@ -45,6 +49,6 @@ export class LayoutComponent {
   }
 
   onLogin() {
-    console.log('Login clicked');
+    this.auth0Service.login(this.currentRoute);
   }
 }

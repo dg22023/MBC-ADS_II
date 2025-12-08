@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Space } from '../booking/booking';
 import { Bookingservice } from '../../services/bookingservice/bookingservice';
@@ -13,10 +14,12 @@ import { MatButtonModule } from '@angular/material/button';
   selector: 'app-spaceselector-dialog',
   imports: [
     CommonModule,
+    HttpClientModule,
     MatDialogModule,
     MatListModule,
     MatButtonModule
   ],
+  providers: [Bookingservice],
   templateUrl: './spaceselector-dialog.html',
   styleUrl: './spaceselector-dialog.css'
 })

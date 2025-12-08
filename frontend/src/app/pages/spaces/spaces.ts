@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 import { Router, RouterModule } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -27,6 +28,7 @@ interface SpaceData {
   standalone: true,
   imports: [
     CommonModule,
+    HttpClientModule,
     RouterModule,
     MatIconModule,
     MatButtonModule,
