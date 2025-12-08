@@ -1,6 +1,7 @@
 import { Component, ChangeDetectorRef, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 import { Bookingservice } from '../../services/bookingservice/bookingservice';
 import { Space } from '../../models/booking/booking';
 
@@ -10,7 +11,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
+import { MatNativeDateModule, DateAdapter, MAT_DATE_FORMATS, NativeDateAdapter, MAT_NATIVE_DATE_FORMATS } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { SpaceselectorDialog } from '../../models/spaceselector-dialog/spaceselector-dialog';
@@ -27,6 +28,7 @@ export interface BookingDialogData {
   imports: [
     CommonModule,
     ReactiveFormsModule,
+    HttpClientModule,
     MatDatepickerModule,
     MatDialogModule,
     MatFormFieldModule,
@@ -36,6 +38,11 @@ export interface BookingDialogData {
     NgxMaterialTimepickerModule,
     MatIconModule,
     MatSnackBarModule
+  ],
+  providers: [
+    Bookingservice,
+    { provide: DateAdapter, useClass: NativeDateAdapter },
+    { provide: MAT_DATE_FORMATS, useValue: MAT_NATIVE_DATE_FORMATS }
   ],
   standalone: true,
   templateUrl: './bookingform.html',

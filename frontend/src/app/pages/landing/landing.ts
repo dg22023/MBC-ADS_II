@@ -2,6 +2,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
+import { Auth0Service } from '../../services/auth0.service';
 
 // Módulos Angular Material
 import { MatIconModule } from '@angular/material/icon';
@@ -22,5 +23,12 @@ import { MatCardModule } from '@angular/material/card';
   styleUrls: ['./landing.css']
 })
 export class LandingComponent {
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private auth0Service: Auth0Service
+  ) {}
+
+  onLogin() {
+    this.auth0Service.login('/');
+  }
 }

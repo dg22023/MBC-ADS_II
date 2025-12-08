@@ -28,6 +28,8 @@ public class SegurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         // Permitir acceso público para ver los espacios
                         .requestMatchers(HttpMethod.GET, "/api/v1/spaces/**").permitAll()
+                        // Permitir acceso público para crear reservaciones (temporal para desarrollo)
+                        .requestMatchers(HttpMethod.POST, "/api/v1/reservations/**").permitAll()
                         // Proteger todos los demás endpoints de la API, requiriendo autenticación
                         .anyRequest().authenticated()
                 )
