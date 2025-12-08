@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 import java.util.stream.Collectors;
 
 /**
- * Global exception handler for the MiniBooking API.
+ * Global exception handler for the Mini-Booking API.
  * Provides consistent error responses across all endpoints.
  */
 @RestControllerAdvice

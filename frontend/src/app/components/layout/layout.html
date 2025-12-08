@@ -1,0 +1,57 @@
+<mat-sidenav-container class="sidenav-container">
+  <!-- Sidenav (Drawer) -->
+  <mat-sidenav #drawer mode="over" class="sidenav">
+    <div class="logo-section">
+      <img src="/images/Logo.png" alt="Mini-Booking" class="sidebar-logo">
+    </div>
+    <mat-nav-list>
+      <a mat-list-item routerLink="/" [class.active]="isActive('/')" (click)="drawer.close()">
+        <mat-icon>home</mat-icon>
+        <span>Inicio</span>
+      </a>
+      <a mat-list-item routerLink="/spaces" [class.active]="isActive('/spaces')" (click)="drawer.close()">
+        <mat-icon>meeting_room</mat-icon>
+        <span>Explorar Espacios</span>
+      </a>
+      <a mat-list-item routerLink="/about" [class.active]="isActive('/about')" (click)="drawer.close()">
+        <mat-icon>info</mat-icon>
+        <span>Acerca de</span>
+      </a>
+      <a mat-list-item routerLink="/contact" [class.active]="isActive('/contact')" (click)="drawer.close()">
+        <mat-icon>contact_mail</mat-icon>
+        <span>Contacto</span>
+      </a>
+      <mat-divider></mat-divider>
+      <a mat-list-item (click)="onLogin(); drawer.close()">
+        <mat-icon>login</mat-icon>
+        <span>Iniciar Sesión</span>
+      </a>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <!-- Main Content -->
+  <mat-sidenav-content>
+    <!-- Toolbar -->
+    <mat-toolbar class="toolbar">
+      <button mat-icon-button (click)="drawer.toggle()" class="menu-button">
+        <img src="/images/NavIcon.png" alt="Menu" class="nav-icon">
+      </button>
+      <div class="logo" routerLink="/" style="cursor: pointer;">
+        <img src="/images/Logo.png" alt="Mini-Booking" class="toolbar-logo">
+      </div>
+      <span class="spacer"></span>
+      <nav class="desktop-nav">
+        <a mat-button routerLink="/" [class.active]="isActive('/')">Inicio</a>
+        <a mat-button routerLink="/spaces" [class.active]="isActive('/spaces')">Explorar Espacios</a>
+        <a mat-button routerLink="/about" [class.active]="isActive('/about')">Acerca de</a>
+        <a mat-button routerLink="/contact" [class.active]="isActive('/contact')">Contacto</a>
+      </nav>
+      <button mat-raised-button color="accent" (click)="onLogin()">Iniciar Sesión</button>
+    </mat-toolbar>
+
+    <!-- Page Content -->
+    <div class="page-content">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

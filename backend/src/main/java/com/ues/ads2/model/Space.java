@@ -7,6 +7,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.Column;
 import lombok.Data;
 
 @Entity
@@ -25,8 +26,24 @@ public class Space {
 
     private int capacity;
 
+    @Column(length = 100)
+    private String subtitle;
+
+    @Column(length = 500)
+    private String description;
+
+    private Double pricePerHour;
+
     public enum SpaceType {
         DESK,
-        MEETING_ROOM
+        MEETING_ROOM,
+        WORKSHOP,
+        OFFICE,
+        BOARDROOM,
+        STUDIO,
+        POD,
+        COLLABORATION,
+        TRAINING,
+        PODCAST
     }
 }

@@ -1,0 +1,33 @@
+<div class="spaces-content">
+  <div class="spaces-header">
+    <h1>Espacios Disponibles</h1>
+    <p>Encuentra el espacio perfecto para tus necesidades</p>
+  </div>
+
+  <div class="loading-container" *ngIf="loading">
+    <mat-icon class="loading-spinner">refresh</mat-icon>
+    <p>Cargando espacios...</p>
+  </div>
+
+  <div class="spaces-grid" *ngIf="!loading">
+    <mat-card class="space-card" *ngFor="let space of spaces">
+      <mat-card-header>
+        <mat-card-title>{{ space.name }}</mat-card-title>
+        <mat-card-subtitle>{{ space.subtitle }}</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <p class="description">{{ space.description }}</p>
+        <div class="features">
+          <span class="feature" *ngFor="let feature of space.features">
+            <mat-icon>{{ feature.icon }}</mat-icon> {{ feature.text }}
+          </span>
+        </div>
+        <div class="price">{{ space.price }}/hour</div>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-raised-button color="primary" (click)="bookSpace(space)">Reservar Ahora</button>
+        <button mat-button (click)="viewDetails(space)">Detalles</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>

@@ -1,9 +1,38 @@
 .booking-container {
-  max-width: 500px;
+  max-width: 550px;
   margin: 20px auto;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  padding: 32px;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+  background: white;
+}
+
+.booking-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 24px 16px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.booking-modal-header h3 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+  background: linear-gradient(135deg, #002855 0%, #004e8c 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.close-modal-btn {
+  color: #718096 !important;
+  transition: all 0.2s ease;
+}
+
+.close-modal-btn:hover {
+  color: #2d3748 !important;
+  transform: rotate(90deg);
 }
 
 .form-group {
@@ -21,31 +50,326 @@
 .space-selected-display {
   margin-top: 12px;
   font-size: 1.05em;
-  background-color: #f0f8ff;
-  padding: 8px;
-  border-radius: 4px;
+  background: linear-gradient(135deg, #f0f4ff 0%, #e8f0fe 100%);
+  padding: 12px 16px;
+  border-radius: 8px;
+  border-left: 4px solid #002855;
+  box-shadow: 0 2px 8px rgba(0, 40, 85, 0.1);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.space-selected-display mat-icon {
+  color: #002855;
+}
+
+.space-price {
+  color: #666;
+  font-size: 0.9em;
+  margin-top: 4px;
+}
+
+.select-space-btn {
+  background: linear-gradient(135deg, #002855 0%, #004e8c 100%) !important;
+  color: white !important;
+  width: 100%;
+  height: 48px;
+  font-weight: 600;
 }
 
 .submit-button {
-  margin-top: 20px;
+  margin-top: 24px;
   width: 100%;
+  height: 48px;
+  font-size: 1.05rem;
+  font-weight: 600;
+  background: linear-gradient(135deg, #002855 0%, #004e8c 100%) !important;
+  color: white !important;
+  box-shadow: 0 4px 12px rgba(0, 40, 85, 0.4) !important;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.submit-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 40, 85, 0.6) !important;
+}
+
+.submit-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 /* Clases genéricas para alertas (similares a Bootstrap) */
 .alert {
-  padding: 10px;
-  border-radius: 4px;
-  margin-bottom: 15px;
+  padding: 16px 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  font-size: 1em;
+  font-weight: 500;
+  border: 1px solid transparent;
+  animation: slideDown 0.4s ease-out;
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
+
+.alert::before {
+  content: '';
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+}
+
 .alert-success {
-  background-color: #d4edda;
+  background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
   color: #155724;
+  border-color: #c3e6cb;
+  box-shadow: 0 2px 8px rgba(21, 87, 36, 0.1);
 }
+
+.alert-success::before {
+  background-color: #28a745;
+}
+
 .alert-danger {
-  background-color: #f8d7da;
+  background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
   color: #721c24;
+  border-color: #f5c6cb;
+  box-shadow: 0 2px 8px rgba(114, 28, 36, 0.1);
+}
+
+.alert-danger::before {
+  background-color: #dc3545;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 mat-error {
   font-size: 0.85em;
+}
+
+/* Enhanced form field styling */
+::ng-deep .mat-mdc-form-field {
+  width: 100%;
+}
+
+::ng-deep .mat-mdc-text-field-wrapper {
+  background-color: #f8fafc;
+  border-radius: 8px;
+}
+
+::ng-deep .mat-mdc-form-field-focus-overlay {
+  background-color: transparent;
+}
+
+::ng-deep .mat-mdc-form-field.mat-focused .mat-mdc-text-field-wrapper {
+  background-color: #fff;
+  box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.2);
+}
+
+/* Button styling for space selector */
+::ng-deep button[color="accent"] {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+  transition: all 0.3s ease;
+  height: 42px;
+  font-weight: 600;
+}
+
+::ng-deep button[color="accent"]:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(102, 126, 234, 0.5);
+}
+
+/* Booking Summary Section */
+.booking-summary {
+  background: linear-gradient(135deg, #f0f4ff 0%, #e8f0fe 100%);
+  padding: 20px;
+  border-radius: 12px;
+  margin: 24px 0;
+  border-left: 4px solid #002855;
+}
+
+.booking-summary h4 {
+  margin: 0 0 16px 0;
+  color: #002855;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  font-size: 1rem;
+  color: #4a5568;
+}
+
+.summary-row.total {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 2px solid #002855;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #002855;
+}
+
+/* Payment Section */
+.payment-section {
+  margin: 24px 0;
+}
+
+.payment-section h4 {
+  margin: 0 0 16px 0;
+  color: #002855;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.payment-options {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.payment-option {
+  flex: 1;
+  height: 60px;
+  border: 2px solid #e2e8f0 !important;
+  background: white !important;
+  color: #4a5568 !important;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  transition: all 0.3s ease;
+}
+
+.payment-option mat-icon {
+  font-size: 24px;
+  width: 24px;
+  height: 24px;
+}
+
+.payment-option:hover {
+  border-color: #002855 !important;
+  background: #f7fafc !important;
+}
+
+.payment-option.selected {
+  border-color: #002855 !important;
+  background: linear-gradient(135deg, #f0f4ff 0%, #e8f0fe 100%) !important;
+  color: #002855 !important;
+  font-weight: 600;
+}
+
+.card-details,
+.paypal-details {
+  animation: fadeIn 0.3s ease;
+}
+
+.card-row {
+  display: flex;
+  gap: 12px;
+}
+
+.card-row .form-group {
+  flex: 1;
+}
+
+.paypal-info {
+  background: #fff3cd;
+  border: 1px solid #ffc107;
+  border-radius: 8px;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #856404;
+}
+
+.paypal-info mat-icon {
+  color: #ffc107;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Dialog content padding */
+mat-dialog-content {
+  padding: 24px !important;
+  max-height: 70vh;
+  overflow-y: auto;
+  display: block !important;
+}
+
+::ng-deep .mat-mdc-dialog-content {
+  padding: 24px !important;
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+mat-dialog-content::-webkit-scrollbar,
+::ng-deep .mat-mdc-dialog-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+mat-dialog-content::-webkit-scrollbar-track,
+::ng-deep .mat-mdc-dialog-content::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+mat-dialog-content::-webkit-scrollbar-thumb,
+::ng-deep .mat-mdc-dialog-content::-webkit-scrollbar-thumb {
+  background: #c7c7c7;
+  border-radius: 10px;
+}
+
+mat-dialog-content::-webkit-scrollbar-thumb:hover,
+::ng-deep .mat-mdc-dialog-content::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+.form-actions {
+  margin-top: 8px;
+  padding: 0;
+}
+
+/* Ensure form fields are visible */
+mat-form-field {
+  width: 100%;
+  display: block;
+}
+
+::ng-deep .mat-mdc-form-field {
+  width: 100%;
 }

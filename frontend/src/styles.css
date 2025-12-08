@@ -1,7 +1,26 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html, body { 
+  height: 100%; 
+}
+
+body { 
+  margin: 0; 
+  font-family: 'Inter', 'Roboto', "Helvetica Neue", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #f8fafc;
+  line-height: 1.8;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
 
 /* src/styles.css */
 
@@ -26,4 +45,56 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 */
 .timepicker-backdrop {
   z-index: 1049 !important;
+}
+
+/* === GLOBAL DIALOG STYLING === */
+::ng-deep .mat-mdc-dialog-container {
+  border-radius: 16px !important;
+  overflow: hidden;
+}
+
+::ng-deep .mat-mdc-dialog-container .mdc-dialog__surface {
+  border-radius: 16px !important;
+}
+
+/* === MATERIAL BUTTON OVERRIDES === */
+::ng-deep .mat-mdc-button,
+::ng-deep .mat-mdc-raised-button {
+  border-radius: 8px !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.3px;
+}
+
+/* === CUSTOM SCROLLBAR === */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c7c7c7;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* === SNACKBAR STYLING === */
+::ng-deep .error-snackbar {
+  background-color: #dc3545 !important;
+  color: white !important;
+  font-weight: 500 !important;
+}
+
+::ng-deep .error-snackbar .mat-mdc-button {
+  color: white !important;
+}
+
+::ng-deep .mat-mdc-snack-bar-container {
+  margin-top: 64px !important;
 }

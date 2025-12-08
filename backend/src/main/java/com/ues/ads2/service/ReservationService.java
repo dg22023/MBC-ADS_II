@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Service class for managing reservations in the MiniBooking system.
+ * Service class for managing reservations in the Mini-Booking system.
  * Handles business logic for creating reservations and checking availability.
  */
 @Service
