@@ -1,9 +1,10 @@
+// src/app/pages/landing/landing.ts
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 
-// Módulos Angular Material
+// Angular Material modules usados en la vista:
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -13,9 +14,6 @@ import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule, MatRippleModule } from '@angular/material/core';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-
-import { Bookingform } from '../../components/bookingform/bookingform';
 
 @Component({
   selector: 'app-landing',
@@ -33,13 +31,12 @@ import { Bookingform } from '../../components/bookingform/bookingform';
     MatNativeDateModule,
     MatRippleModule,
     MatSidenavModule,
-    MatDialogModule
   ],
   templateUrl: './landing.html',
   styleUrls: ['./landing.css']
 })
 export class LandingComponent {
-  constructor(private router: Router, private dialog: MatDialog) {}
+  constructor(private router: Router) {}
 
   title = 'MiniBookingUES — Reserva tu espacio fácil y rápido';
   subtitle =
@@ -50,73 +47,44 @@ export class LandingComponent {
   rooms = [
     {
       id: 1,
-      name: 'ROOM 1',
-      subtitle: 'Sala Reuniones',
-      description: 'Sala ideal para reuniones cortas y llamadas',
-      features: ['WiFi', 'Pizarra', 'Enchufe'],
-      cta: 'Ver horarios'
+      name: 'ROOM 1 — Sala Aurora',
+      subtitle: 'Sala de Reuniones / Workspace',
+      description:
+        'Espacio de trabajo para 2 personas. Espacio cómodo para laptops, con acceso a internet y cafetera.',
+      features: ['WiFi', 'Pizarra', 'Enchufe', 'Cafetera'],
+      cta: 'Agendar'
     },
     {
       id: 2,
-      name: 'ROOM 2',
-      subtitle: 'Workshop',
-      description: 'Espacio para talleres y sesiones colaborativas',
-      features: ['Pantalla', 'Mesas modulares', 'Café'],
-      cta: 'Ver horarios'
+      name: 'ROOM 2 — Sala Brisa',
+      subtitle: 'Workshop / Taller',
+      description:
+        'Espacio para 5 personas, con mesas modulares y cafetera. Ideal para sesiones prácticas.',
+      features: ['Pantalla', 'Mesas modulares', 'Café', 'WiFi'],
+      cta: 'Reservar'
     },
     {
       id: 3,
-      name: 'ROOM 3',
-      subtitle: 'Hotdesk 1',
-      description: 'Puesto individual en área compartida',
-      features: ['WiFi', 'Enchufe'],
+      name: 'ROOM 3 — Sala Atlas',
+      subtitle: 'Mesa de juntas / Presentaciones',
+      description:
+        'Sala para 10 personas con mesa de juntas, proyector y enchufes múltiples.',
+      features: ['Mesa de juntas', 'Proyector', 'WiFi', 'Enchufes'],
       cta: 'Reservar'
     }
   ];
 
-  onSelectDate(d: Date | null) {
-    this.selectedDate = d;
-  }
-
   onAction(room: any) {
-    if (room.id === 1 || room.id === 2) {
-      this.router.navigate(['/rooms', room.id]);
-    } else {
-      console.log('Acción:', room);
+    const queryParams: any = {};
+
+    if (this.selectedDate) {
+      queryParams.date = this.selectedDate.toISOString().split('T')[0];
     }
+
+    this.router.navigate(['/rooms', room.id], { queryParams });
   }
 
-  onBook() {
-    window.location.href = '/login';
-  }
-
-  onLogin() {
-    window.location.href = '/login';
-  }
-
-  onSignup() {
-    window.location.href = '/signup';
-  }
-
-  // --- ¡NUEVO MÉTODO! ---
-  // Este método abre el formulario de reserva
-  openBookingModal(): void {
-    const dialogRef = this.dialog.open(Bookingform, {
-      width: '600px',        // Un ancho adecuado para el formulario
-      maxWidth: '90vw',      // Responsive en móviles
-      autoFocus: false,      // Evita que el primer campo se enfoque auto.
-      disableClose: true,    // Opcional: Evita que se cierre al hacer clic fuera
-    });
-
-    // Opcional: Escuchar cuando el modal se cierra
-    dialogRef.afterClosed().subscribe((result: any) => {
-      console.log('El modal de reserva se cerró');
-      if (result === true) {
-        // El 'true' lo enviamos desde el form al reservar con éxito
-        console.log('¡Reserva creada! (Podrías recargar datos aquí)');
-      }
-    });
-
-  
-}
+  onBook() { this.router.navigate(['/login']); }
+  onLogin() { this.router.navigate(['/login']); }
+  onSignup() { this.router.navigate(['/signup']); }
 }

@@ -1,0 +1,23 @@
+<!-- src/app/shared/navbar/navbar/navbar.html -->
+<nav class="app-navbar">
+  <div class="brand">
+    <a routerLink="/">MiniBookingUES</a>
+  </div>
+
+  <div class="nav-actions">
+    <!-- si está autenticado mostrar nombre / logout, si no, Login / Sign up -->
+    <ng-container *ngIf="isAuthenticated$ | async as isAuth">
+      <ng-container *ngIf="isAuth; else anon">
+        <span class="user" *ngIf="user$ | async as user">
+          {{ user?.name || user?.email }}
+        </span>
+        <button mat-button (click)="logout()">Logout</button>
+      </ng-container>
+
+      <ng-template #anon>
+        <button mat-button (click)="login()">Login</button>
+        <button mat-stroked-button (click)="signup()">Sign Up</button>
+      </ng-template>
+    </ng-container>
+  </div>
+</nav>

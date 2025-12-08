@@ -1,0 +1,22 @@
+/* src/app/shared/navbar/navbar/navbar.css */
+.app-navbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:10px 20px;
+  background:#143f37; /* verde oscuro */
+  color:white;
+}
+.app-navbar a{
+  color:white;
+  text-decoration:none;
+  font-weight:700;
+}
+.nav-actions button{
+  margin-left:8px;
+  color:white;
+}
+.user{
+  margin-right:10px;
+  font-weight:600;
+}

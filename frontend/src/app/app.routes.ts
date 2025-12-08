@@ -1,10 +1,18 @@
+// src/app/app.routes.ts
 import { Routes } from '@angular/router';
+
 import { LandingComponent } from './pages/landing/landing';
 import { Rooms } from './pages/rooms/rooms';
+import { LoginComponent } from './auth/login/login.component';
 
 export const routes: Routes = [
-  { path: '', component: LandingComponent, pathMatch: 'full' },
+  { path: '', redirectTo: 'landing', pathMatch: 'full' },
+
   { path: 'landing', component: LandingComponent },
-  { path: 'rooms/:id', component: Rooms }, // 👈 Ruta dinámica para los rooms
-  { path: '**', redirectTo: '' } // Redirige rutas inválidas al inicio
+
+  { path: 'login', component: LoginComponent },
+
+  { path: 'rooms/:id', component: Rooms },
+
+  { path: '**', redirectTo: 'landing' }
 ];

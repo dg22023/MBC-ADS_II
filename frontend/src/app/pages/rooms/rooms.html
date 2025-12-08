@@ -1,11 +1,30 @@
+<!-- src/app/pages/rooms/rooms.html -->
 <div class="room-page">
   <mat-card>
     <mat-card-title>{{ roomTitle }}</mat-card-title>
+
     <mat-card-content>
-      <p>{{ roomDescription }}</p>
+      <p class="desc">{{ roomDescription }}</p>
+
+      <div class="meta">
+        <p><strong>Tipo:</strong> {{ subtitle }}</p>
+        <p><strong>Capacidad:</strong> {{ capacity }} personas</p>
+      </div>
+
+      <p *ngIf="selectedDate"><strong>Fecha seleccionada:</strong> {{ selectedDate | date:'longDate' }}</p>
+
+      <div class="features" *ngIf="features?.length">
+        <span class="chip" *ngFor="let f of features">{{ f }}</span>
+      </div>
     </mat-card-content>
-    <mat-card-actions>
-      <button mat-flat-button color="primary" routerLink="/">
+
+    <mat-card-actions class="actions">
+      <button mat-flat-button color="primary" (click)="onPrimaryAction()">
+        <mat-icon>event_available</mat-icon>
+        {{ actionLabel }}
+      </button>
+
+      <button mat-flat-button color="accent" routerLink="/">
         <mat-icon>home</mat-icon>
         Volver al inicio
       </button>
